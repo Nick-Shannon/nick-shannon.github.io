@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<title>W3.CSS Template</title>
+<title>Holdiays Blog</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/lib/w3.css">
@@ -16,7 +16,7 @@ and is wrapped around the whole page content, except for the footer in this exam
 
 <!-- Header -->
 <header class="w3-container w3-center w3-padding-32"> 
-  <h1><b>MY BLOG</b></h1>
+  <h1><b>Holiadys</b></h1>
   <p>Welcome to the blog of <span class="w3-tag">unknown</span></p>
 </header>
 
@@ -28,23 +28,114 @@ and is wrapped around the whole page content, except for the footer in this exam
   <!-- Blog entry -->
   <div class="w3-card-4 w3-margin w3-white">
     
- <div id="googleMap" style='width: 100%; height: 200px;'></div>
-        <script type='text/javascript'>
-            function loadMapScenario() {
-                var map = new Microsoft.Maps.Map(document.getElementById("googleMap"), {
-                    credentials: 'Aoqwq4MnPOtVqxAFpjmjLSCMwmgpxjcgNVJa9y50KRNOxCNVXXg30Eopyg9i5jrc',
-                    center: new Microsoft.Maps.Location(51.50632, -0.12714),
-                    mapTypeId: Microsoft.Maps.MapTypeId.aerial,
-                    zoom: 10
-                });
-                
-            }
-        </script>
-        <script type='text/javascript' src='http://www.bing.com/api/maps/mapcontrol?branch=experimental&callback=loadMapScenario' async defer></script>
+  
+<div id='myMap' style="width:100%;height:500px;"></div>
+	     <style>
+	html, body {
+		width:100%;
+		height:100%;
+		margin:0;
+		padding:0;
+	}	
+	</style>
+      
+      
+<script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap' async defer></script>
+<script type='text/javascript' src='/BingMapsCredentials.js'></script>
+<script type='text/javascript'>
+var map;
+function GetMap() {
+map = new Microsoft.Maps.Map('#myMap', {
+credentials: 'Aoqwq4MnPOtVqxAFpjmjLSCMwmgpxjcgNVJa9y50KRNOxCNVXXg30Eopyg9i5jrc',
+center: new Microsoft.Maps.Location(47.614, -122.165),
+zoom: 2
+});
+//Load the Spatial Data Services module.
+Microsoft.Maps.loadModule('Microsoft.Maps.SpatialDataService', function () {
+//Create an array of state boundaries to retrieve.
+var states = ['Dubai', 'California', 'nevada', 'utah', 'arizona', 'colorado', 'dc', 'maryland', 'new york', 'British Columbia', 'Beijing', 'England', 'Scotland', 'Northern Island'];
+//Create geoData request options to retrieve state boundaries.
+var stateRequestOptions = {
+entityType: 'AdminDivision1',
+getAllPolygons: false,
+};
+//Use the GeoData API manager to get the State.
+Microsoft.Maps.SpatialDataService.GeoDataAPIManager.getBoundary(states, stateRequestOptions, map, function (data) {
+if (data.results && data.results.length > 0) {
+map.entities.push(data.results[0].Polygons);
+}
+});
+//Create an array of country boundaries to retrieve.
+var CountryRegion = ['New Zealand', 'Australia', 'Japan', 'Singapore', 'Russia', 'France', 'Netherland', 'South Korea', 'Tonga', 'Ireland', 'Mongolia'];
+//Create geoData request options to retrieve country boundaries.
+var countryRequestOptions = {
+entityType: 'CountryRegion',
+getAllPolygons: true,
+};
+//Use the GeoData API manager to retrieve the country boundaries.
+Microsoft.Maps.SpatialDataService.GeoDataAPIManager.getBoundary(CountryRegion, countryRequestOptions, map, function (data) {
+if (data.results && data.results.length > 0) {
+map.entities.push(data.results[0].Polygons);
+}
+});
+});
+var center = map.getCenter();
+var polyline = new Microsoft.Maps.Polyline([new Microsoft.Maps.Location(-31.930627, 115.744237),
+new Microsoft.Maps.Location(-31.930627, 115.744237),
+new Microsoft.Maps.Location(-31.724948, 115.515871),
+new Microsoft.Maps.Location(-31.531334, 115.307852),
+new Microsoft.Maps.Location(-31.349785, 115.120182),
+new Microsoft.Maps.Location(-31.180301, 114.952858),
+new Microsoft.Maps.Location(-31.022883, 114.805882),
+new Microsoft.Maps.Location(-30.877529, 114.679254),
+new Microsoft.Maps.Location(-30.74424, 114.572973),
+new Microsoft.Maps.Location(-30.615811, 114.478789),
+new Microsoft.Maps.Location(-30.485035, 114.388451),
+new Microsoft.Maps.Location(-30.351913, 114.301959),
+new Microsoft.Maps.Location(-30.216444, 114.219313),
+new Microsoft.Maps.Location(-30.07863, 114.140512),
+new Microsoft.Maps.Location(-29.938469, 114.065558),
+new Microsoft.Maps.Location(-31.022883, 114.805882),
+new Microsoft.Maps.Location(-30.877529, 114.679254),
+new Microsoft.Maps.Location(-30.74424, 114.572973),
+new Microsoft.Maps.Location(-30.615811, 114.478789),
+new Microsoft.Maps.Location(-30.485035, 114.388451),
+new Microsoft.Maps.Location(-30.351913, 114.301959),
+new Microsoft.Maps.Location(-30.216444, 114.219313),
+new Microsoft.Maps.Location(-30.07863, 114.140512),
+new Microsoft.Maps.Location(-29.938469, 114.065558),
+new Microsoft.Maps.Location(-29.795962, 113.994449),
+new Microsoft.Maps.Location(-29.651509, 113.927379),
+new Microsoft.Maps.Location(-29.505514, 113.864542),
+new Microsoft.Maps.Location(-29.357974, 113.805938),
+new Microsoft.Maps.Location(-29.208891, 113.751565),
+new Microsoft.Maps.Location(-29.058264, 113.701425),
+new Microsoft.Maps.Location(-28.906094, 113.655518),
+new Microsoft.Maps.Location(-28.75238, 113.613843),
+new Microsoft.Maps.Location(-28.597554, 113.576511),
+new Microsoft.Maps.Location(-28.442048, 113.543632),
+new Microsoft.Maps.Location(-28.285861, 113.515207),
+new Microsoft.Maps.Location(-28.128993, 113.491235),
+new Microsoft.Maps.Location(-27.971445, 113.471716),
+new Microsoft.Maps.Location(-27.813216, 113.456651),
+new Microsoft.Maps.Location(-27.654307, 113.44604),
+new Microsoft.Maps.Location(-27.483892, 113.441556),
+new Microsoft.Maps.Location(-27.291145, 113.444875),
+new Microsoft.Maps.Location(-27.076066, 113.455997),
+new Microsoft.Maps.Location(-26.838656, 113.474921),
+new Microsoft.Maps.Location(-26.578913, 113.501648),
+new Microsoft.Maps.Location(-26.296839, 113.536178),
+new Microsoft.Maps.Location(-25.992434, 113.57851)], null);
+map.entities.push(polyline);
+}
+</script>
+<script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?branch=experimental&callback=loadMapScenario' async defer></script>      
 
     
    
   </div>
+  
+  
   <hr>
 
   <!-- Blog entry -->
