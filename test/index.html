@@ -17,37 +17,146 @@
 		zoom: 2 
 
 }); 
-//Create an array of locations to get the boundaries of 
-var states = ['Dubai', 'California', 'nevada', 'utah', 'arizona', 'colorado', 'dc', 'maryland', 'new york', 'British Columbia', 'Beijing', 'England', 'Scotland', 'Northern Island']; 
-var geoDataRequestOptions = { 
-entityType: 'AdminDivision1' 
-}; 
-Microsoft.Maps.loadModule('Microsoft.Maps.SpatialDataService', function () { 
-//Use the GeoData API manager to get the State 
-Microsoft.Maps.SpatialDataService.GeoDataAPIManager.getBoundary(states, geoDataRequestOptions, map, function (data) { 
-if (data.results && data.results.length > 0) { 
-map.entities.push(data.results[0].Polygons); 
-} 
-}); 
 
-}); 
-//Create an array of locations to get the boundaries of 
-var countries = ['New Zealand','Australia','Japan', 'Singapore','Russia','France','Netherland','South Korea','Tonga','Ireland','Mongolia']; 
-var geoDataRequestOptions = { 
-getAllPolygons: true 
+<script>
+        var map, tabs;
+        var mapLayer1, mapLayer2;
+        var mapView1, mapView2;
+        var currentTab;
 
-//Use the GeoData API manager to get the State 
-Microsoft.Maps.SpatialDataService.GeoDataAPIManager.getBoundary(countries, geoDataRequestOptions, map, function (data) { 
-if (data.results && data.results.length > 0) { 
-map.entities.push(data.results[0].Polygons); 
-	
+        $(function () {
+            //Create the tabs and add an activate event.
+            tabs = $("#tabs").tabs({
+                create: function(event, ui){
+                    //Try loading the map when the tabs are created for the active tab.
+                    var tabName = ui.tab[0].firstChild.hash;
+                    loadMap(tabName);
+                },
+                activate: function (event, ui) {
+                    //Try loading the map for the activated tab.
+                    var tabName = ui.newTab[0].firstChild.hash;                    
+                    loadMap(tabName);
+                }
+            });            
 
-}; 
+            //Define the initial map views for each map.
+            mapView1 = {
+                zoom: 1,
+                mapTypeId: Microsoft.Maps.MapTypeId.road
+            };
 
-	
+            mapView2 = {
+                zoom: 3,
+                mapTypeId: Microsoft.Maps.MapTypeId.aerial
+            };
+        });
+
+        function loadMap(tabName) {
+            //Store the map view of the previous tab.
+            switch (currentTab) {
+                case '#tabs-2':
+                    mapView1 = getMapView();
+                    break;
+                case '#tabs-3':
+                    mapView2 = getMapView();
+                    break;
+                default:
+                    break;
             }
-		
-        </script>
+
+            currentTab = tabName;
+
+            //If the first tab is loaded, hide the map canvas.
+            if (tabName === '#tabs-1') {
+                $('#myMap').css('display', 'none');
+                return;
+            }
+
+            //If the map isn't already created, create an instance
+            if (!map) {
+                //Create a map instance.
+                map = new Microsoft.Maps.Map('#myMap', {
+                    credentials: YourBingMapsKey
+                });
+
+                //Create a layer for each tab/view.
+                mapLayer1 = new Microsoft.Maps.Layer();
+                map.layers.insert(mapLayer1);
+
+                mapLayer2 = new Microsoft.Maps.Layer();
+                map.layers.insert(mapLayer2);
+
+                //Load the data for each map view into its respecive layer.
+                loadMapData();
+            }
+
+            //Set visibility of data based on the selected tab.
+            var targetCanvas;
+            var mapView;
+
+            $('#myMap').css('display', '');
+
+            switch (tabName) {
+                case '#tabs-2':
+                    mapView = mapView1;
+                    mapLayer1.setVisible(true);
+                    mapLayer2.setVisible(false);
+                    targetCanvas = $('#mapZone1');
+                    break;
+                case '#tabs-3':
+                    mapView = mapView2;
+                    mapLayer1.setVisible(false);
+                    mapLayer2.setVisible(true);
+                    targetCanvas = $('#mapZone2');
+                    break;
+                default:
+                    $('#myMap').css('display', 'none');
+                    break;
+            }
+
+            if (targetCanvas) {
+                repositionMap(targetCanvas);
+
+                if (mapView) {
+                    //Set the map view after repositing/resizing map.
+                    map.setView(mapView);
+                }
+            }
+        }
+
+        function getMapView() {
+            return {
+                center: map.getCenter(),
+                heading: map.getHeading(),
+                mapTypeId: map.getMapTypeId(),
+                zoom: map.getZoom()
+            };
+        }
+
+        function repositionMap(targetCanvas) {
+            var mapDiv = $('#myMap');
+
+            var width = targetCanvas.width();
+            var height = targetCanvas.height();
+            mapDiv.css('width', width);
+            mapDiv.css('height', height);
+
+            var pos = targetCanvas.offset();
+
+            mapDiv.css('top', pos.top);
+            mapDiv.css('left', pos.left);
+        }
+
+        function loadMapData() {
+            //Add 100 random pushpins to the first map view.
+            mapLayer1.add(Microsoft.Maps.TestDataGenerator.getPushpins(100));
+
+            //Add 10 random polygons to the second map view.
+            mapLayer2.add(Microsoft.Maps.TestDataGenerator.getPolygons(10));
+        }
+    </script>			
+			
+			
         <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?branch=experimental&callback=loadMapScenario' async defer></script>
     </head>
   <body>
@@ -56,9 +165,6 @@ map.entities.push(data.results[0].Polygons);
         </header>
 	     
 	     <div id="myMap" style="position:relative;width:600px;height:400px;"></div> 
-             <fieldset style="width:600px;margin-top:10px;"> 
-	     <legend>Limit Layer to Zoom Range Sample</legend> 
-
-        
+            
     </body>
 </html>
