@@ -1,170 +1,243 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>My Test Map</title>
-        		<!-- link to main stylesheet -->
-		<link rel="stylesheet" type="text/css" href="/css/main.css">
-	    	<meta charset="utf-8" />
-    		<script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap' async defer></script>
-		<script type='text/javascript' src='/BingMapsCredentials.js'></script>
-		<script type='text/javascript'>			
-		var map;
+<title>Holidays 4</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/lib/w3.css">
+<link rel="stylesheet" href="/lib/w3-theme-black.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<body id="myPage">
 
-         	function GetMap() {
-                map = new Microsoft.Maps.Map('#myMap', {
-		credentials: 'Aoqwq4MnPOtVqxAFpjmjLSCMwmgpxjcgNVJa9y50KRNOxCNVXXg30Eopyg9i5jrc', 
-		center: new Microsoft.Maps.Location(47.614, -122.165), 
-		zoom: 2 
+<!-- Side Navigation on click -->
+<nav class="w3-sidenav w3-white w3-card-2 w3-animate-left" style="display:none;z-index:1002" id="mySidenav">
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-closenav w3-xxxlarge w3-text-teal">Close
+    <i class="fa fa-remove"></i>
+  </a>
+  <a  href="#paris" onclick="map.setView({ center : new Microsoft.Maps.Location(48.857, 2.333), zoom: 13})">Paris</a>
+  <a href="#">Link 3</a>
+  <a href="#">Link 4</a>
+  <a href="#">Link 5</a>
+  
+</nav>
 
-}); 
+<!-- Navbar -->
+<div class="w3-top">
+ <ul class="w3-navbar w3-theme-d2 w3-left-align">
+  <li class="w3-hide-medium w3-hide-large w3-opennav w3-right">
+    <a class="w3-hover-white w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
+  </li>
+  <li><a href="#" class="w3-teal"><i class="fa fa-home w3-margin-right"></i>Holidays</a></li>
+  <li class="w3-hide-small"><a href="#Japan" class="w3-hover-white">Japan</a></li>
+  <li class="w3-hide-small"><a href="#South Korea" class="w3-hover-white">South Korea</a></li>
+  <li class="w3-hide-small"><a href="#UK" class="w3-hover-white">UK</a></li>
+  <li class="w3-hide-small"><a href="#contact" class="w3-hover-white">Trans-Mongolian</a></li>
+  <li class="w3-hide-small w3-dropdown-hover">
+    <a href="javascript:void(0);" title="Notifications">Dropdown <i class="fa fa-caret-down"></i></a>     
+    <div class="w3-dropdown-content w3-white w3-card-4">
+      <a href="#">Link</a>
+      <a href="#">Link</a>
+      <a href="#">Link</a>
+    </div>
+  </li>
+  <li class="w3-hide-small w3-right"><a href="#" class="w3-hover-teal" title="Search"><i class="fa fa-search"></i></a></li>
+ </ul>
+
+  <!-- Navbar on small screens -->
+  <div id="navDemo" class="w3-hide w3-hide-large w3-hide-medium">
+    <ul class="w3-navbar w3-left-align w3-theme">
+      <li><a href="#team">Team</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#pricing">Price</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#">Search</a></li>
+      <li class="w3-dropdown-hover">
+      <a href="javascript:void(0);" title="Notifications">Dropdown <i class="fa fa-caret-down"></i></a>     
+      <div class="w3-dropdown-content w3-light-grey w3-card-4">
+        <a href="#">Link</a>
+        <a href="#">Link</a>
+        <a href="#">Link</a>
+      </div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- Work Row -->
+
+<!-- Container -->
+<div class="w3-container" style="position:relative">
+  <a onclick="w3_open()" class="w3-btn-floating-large w3-teal" style="position:absolute;top:+300px;right:24px;z-index:1002;">
+  <i class="fa fa-plus"></i></a>
+</div>
+
+<!-- Contact Container -->
+
+
+<!-- Bing Maps -->
+<script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap' async defer></script>
+<script type='text/javascript' src='/BingMapsCredentials.js'></script>
+<script type='text/javascript'>
+
+  var map;
+
+function GetMap() {
+map = new Microsoft.Maps.Map('#myMap', {
+credentials: 'Aoqwq4MnPOtVqxAFpjmjLSCMwmgpxjcgNVJa9y50KRNOxCNVXXg30Eopyg9i5jrc',
+center: new Microsoft.Maps.Location(51.50632, -0.12714),
+    mapTypeId: Microsoft.Maps.MapTypeId.aerial,
+    zoom: 10
+
+});
+
+//Load the Spatial Data Services module.
+Microsoft.Maps.loadModule('Microsoft.Maps.SpatialDataService', function () {
+//Create an array of state boundaries to retrieve.
+var states = ['Dubai', 'California', 'nevada', 'utah', 'arizona', 'colorado', 'dc', 'maryland', 'new york', 'British Columbia', 'Beijing', 'England', 'Scotland', 'Northern Island'];
+
+//Create geoData request options to retrieve state boundaries.
+var stateRequestOptions = {
+entityType: 'AdminDivision1',
+getAllPolygons: false,
+};
+
+//Use the GeoData API manager to get the State.
+Microsoft.Maps.SpatialDataService.GeoDataAPIManager.getBoundary(states, stateRequestOptions, map, function (data) {
+if (data.results && data.results.length > 0) {
+map.entities.push(data.results[0].Polygons);
+}
+});
+
+//Create an array of country boundaries to retrieve.
+var CountryRegion = ['New Zealand', 'Australia', 'Japan', 'Singapore', 'Russia', 'France', 'Netherland', 'South Korea', 'Tonga', 'Ireland', 'Mongolia'];
+
+//Create geoData request options to retrieve country boundaries.
+var countryRequestOptions = {
+entityType: 'CountryRegion',
+getAllPolygons: true,
+};
+
+//Use the GeoData API manager to retrieve the country boundaries.
+Microsoft.Maps.SpatialDataService.GeoDataAPIManager.getBoundary(CountryRegion, countryRequestOptions, map, function (data) {
+if (data.results && data.results.length > 0) {
+map.entities.push(data.results[0].Polygons);
+}
+});
+});
+
+
+var center = map.getCenter();
+var polyline = new Microsoft.Maps.Polyline([new Microsoft.Maps.Location(-31.930627, 115.744237),
+new Microsoft.Maps.Location(-31.930627, 115.744237),
+new Microsoft.Maps.Location(-31.724948, 115.515871),
+new Microsoft.Maps.Location(-31.531334, 115.307852),
+new Microsoft.Maps.Location(-31.349785, 115.120182),
+new Microsoft.Maps.Location(-31.180301, 114.952858),
+new Microsoft.Maps.Location(-31.022883, 114.805882),
+new Microsoft.Maps.Location(-30.877529, 114.679254),
+new Microsoft.Maps.Location(-30.74424, 114.572973),
+new Microsoft.Maps.Location(-30.615811, 114.478789),
+new Microsoft.Maps.Location(-30.485035, 114.388451),
+new Microsoft.Maps.Location(-30.351913, 114.301959),
+new Microsoft.Maps.Location(-30.216444, 114.219313),
+new Microsoft.Maps.Location(-30.07863, 114.140512),
+new Microsoft.Maps.Location(-29.938469, 114.065558),
+new Microsoft.Maps.Location(-31.022883, 114.805882),
+new Microsoft.Maps.Location(-30.877529, 114.679254),
+new Microsoft.Maps.Location(-30.74424, 114.572973),
+new Microsoft.Maps.Location(-30.615811, 114.478789),
+new Microsoft.Maps.Location(-30.485035, 114.388451),
+new Microsoft.Maps.Location(-30.351913, 114.301959),
+new Microsoft.Maps.Location(-30.216444, 114.219313),
+new Microsoft.Maps.Location(-30.07863, 114.140512),
+new Microsoft.Maps.Location(-29.938469, 114.065558),
+new Microsoft.Maps.Location(-29.795962, 113.994449),
+new Microsoft.Maps.Location(-29.651509, 113.927379),
+new Microsoft.Maps.Location(-29.505514, 113.864542),
+new Microsoft.Maps.Location(-29.357974, 113.805938),
+new Microsoft.Maps.Location(-29.208891, 113.751565),
+new Microsoft.Maps.Location(-29.058264, 113.701425),
+new Microsoft.Maps.Location(-28.906094, 113.655518),
+new Microsoft.Maps.Location(-28.75238, 113.613843),
+new Microsoft.Maps.Location(-28.597554, 113.576511),
+new Microsoft.Maps.Location(-28.442048, 113.543632),
+new Microsoft.Maps.Location(-28.285861, 113.515207),
+new Microsoft.Maps.Location(-28.128993, 113.491235),
+new Microsoft.Maps.Location(-27.971445, 113.471716),
+new Microsoft.Maps.Location(-27.813216, 113.456651),
+new Microsoft.Maps.Location(-27.654307, 113.44604),
+new Microsoft.Maps.Location(-27.483892, 113.441556),
+new Microsoft.Maps.Location(-27.291145, 113.444875),
+new Microsoft.Maps.Location(-27.076066, 113.455997),
+new Microsoft.Maps.Location(-26.838656, 113.474921),
+new Microsoft.Maps.Location(-26.578913, 113.501648),
+new Microsoft.Maps.Location(-26.296839, 113.536178),
+new Microsoft.Maps.Location(-25.992434, 113.57851)], null);
+
+
+map.entities.push(polyline);
+
+
+}
+
+</script>
+<script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?branch=experimental&callback=loadMapScenario' async defer></script>
+	<div id='myMap' style=";top:38px;width:100%;height:100%;"></div>
+	     <style>
+	html, body {
+		width:100%;
+		height:90%;
+		margin:0;
+		padding:0;
+	}	
+	</style>
+	
+
+ 
+  
+  
+<!-- Footer -->
+<footer class="w3-container w3-padding-32 w3-theme-d1 w3-center">
+  <h4>Follow Us</h4>
+  <a class="w3-btn-floating w3-teal" href="javascript:void(0)" title="Facebook"><i class="fa fa-facebook"></i></a>
+  <a class="w3-btn-floating w3-teal" href="javascript:void(0)" title="Twitter"><i class="fa fa-twitter"></i></a>
+  <a class="w3-btn-floating w3-teal" href="javascript:void(0)" title="Google +"><i class="fa fa-google-plus"></i></a>
+  <a class="w3-btn-floating w3-teal" href="javascript:void(0)" title="Google +"><i class="fa fa-instagram"></i></a>
+  <a class="w3-btn-floating w3-teal w3-hide-small" href="javascript:void(0)" title="Linkedin"><i class="fa fa-linkedin"></i></a>
+  <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
+
+  <div style="position:relative;bottom:100px;z-index:1;" class="w3-tooltip w3-right">
+    <span class="w3-text w3-padding w3-teal w3-hide-small">Go To Top</span>   
+    <a class="w3-btn w3-theme" href="#myPage"><span class="w3-xlarge">
+    <i class="fa fa-chevron-circle-up"></i></span></a>
+  </div>
+</footer>
 
 <script>
-        var map, tabs;
-        var mapLayer1, mapLayer2;
-        var mapView1, mapView2;
-        var currentTab;
+// Script for side navigation
+function w3_open() {
+    var x = document.getElementById("mySidenav");
+    x.style.width = "300px";
+    x.style.textAlign = "center";
+    x.style.fontSize = "40px";
+    x.style.paddingTop = "10%";
+    x.style.display = "block";
+}
 
-        $(function () {
-            //Create the tabs and add an activate event.
-            tabs = $("#tabs").tabs({
-                create: function(event, ui){
-                    //Try loading the map when the tabs are created for the active tab.
-                    var tabName = ui.tab[0].firstChild.hash;
-                    loadMap(tabName);
-                },
-                activate: function (event, ui) {
-                    //Try loading the map for the activated tab.
-                    var tabName = ui.newTab[0].firstChild.hash;                    
-                    loadMap(tabName);
-                }
-            });            
+// Close side navigation
+function w3_close() {
+    document.getElementById("mySidenav").style.display = "none";
+}
 
-            //Define the initial map views for each map.
-            mapView1 = {
-                zoom: 1,
-                mapTypeId: Microsoft.Maps.MapTypeId.road
-            };
+// Used to toggle the menu on smaller screens when clicking on the menu button
+function openNav() {
+    var x = document.getElementById("navDemo");
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+    } else { 
+        x.className = x.className.replace(" w3-show", "");
+    }
+}
+</script>
 
-            mapView2 = {
-                zoom: 3,
-                mapTypeId: Microsoft.Maps.MapTypeId.aerial
-            };
-        });
-
-        function loadMap(tabName) {
-            //Store the map view of the previous tab.
-            switch (currentTab) {
-                case '#tabs-2':
-                    mapView1 = getMapView();
-                    break;
-                case '#tabs-3':
-                    mapView2 = getMapView();
-                    break;
-                default:
-                    break;
-            }
-
-            currentTab = tabName;
-
-            //If the first tab is loaded, hide the map canvas.
-            if (tabName === '#tabs-1') {
-                $('#myMap').css('display', 'none');
-                return;
-            }
-
-            //If the map isn't already created, create an instance
-            if (!map) {
-                //Create a map instance.
-                map = new Microsoft.Maps.Map('#myMap', {
-                    credentials: YourBingMapsKey
-                });
-
-                //Create a layer for each tab/view.
-                mapLayer1 = new Microsoft.Maps.Layer();
-                map.layers.insert(mapLayer1);
-
-                mapLayer2 = new Microsoft.Maps.Layer();
-                map.layers.insert(mapLayer2);
-
-                //Load the data for each map view into its respecive layer.
-                loadMapData();
-            }
-
-            //Set visibility of data based on the selected tab.
-            var targetCanvas;
-            var mapView;
-
-            $('#myMap').css('display', '');
-
-            switch (tabName) {
-                case '#tabs-2':
-                    mapView = mapView1;
-                    mapLayer1.setVisible(true);
-                    mapLayer2.setVisible(false);
-                    targetCanvas = $('#mapZone1');
-                    break;
-                case '#tabs-3':
-                    mapView = mapView2;
-                    mapLayer1.setVisible(false);
-                    mapLayer2.setVisible(true);
-                    targetCanvas = $('#mapZone2');
-                    break;
-                default:
-                    $('#myMap').css('display', 'none');
-                    break;
-            }
-
-            if (targetCanvas) {
-                repositionMap(targetCanvas);
-
-                if (mapView) {
-                    //Set the map view after repositing/resizing map.
-                    map.setView(mapView);
-                }
-            }
-        }
-
-        function getMapView() {
-            return {
-                center: map.getCenter(),
-                heading: map.getHeading(),
-                mapTypeId: map.getMapTypeId(),
-                zoom: map.getZoom()
-            };
-        }
-
-        function repositionMap(targetCanvas) {
-            var mapDiv = $('#myMap');
-
-            var width = targetCanvas.width();
-            var height = targetCanvas.height();
-            mapDiv.css('width', width);
-            mapDiv.css('height', height);
-
-            var pos = targetCanvas.offset();
-
-            mapDiv.css('top', pos.top);
-            mapDiv.css('left', pos.left);
-        }
-
-        function loadMapData() {
-            //Add 100 random pushpins to the first map view.
-            mapLayer1.add(Microsoft.Maps.TestDataGenerator.getPushpins(100));
-
-            //Add 10 random polygons to the second map view.
-            mapLayer2.add(Microsoft.Maps.TestDataGenerator.getPolygons(10));
-        }
-    </script>			
-			
-			
-        <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?branch=experimental&callback=loadMapScenario' async defer></script>
-    </head>
-  <body>
-	<header>
-	test one two three. 	
-        </header>
-	     
-	     <div id="myMap" style="position:relative;width:600px;height:400px;"></div> 
-            
-    </body>
+</body>
 </html>
