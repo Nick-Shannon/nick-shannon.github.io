@@ -1,231 +1,28 @@
 <!DOCTYPE html>
-
 <html>
-
 <head>
-
 <title>My Test Map</title>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <!-- link to main stylesheet -->
-
 <link rel="stylesheet" type="text/css" href="/css/main.css">
-
 <meta charset="utf-8" />
 
-
-
  <div id='myMap' style="width:auto;height:auto;">
-
  
-
  </div>
-
  	          
-
-<script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap' async defer></script>
-
-<script type='text/javascript' src='/BingMapsCredentials.js'></script>
-
-<script type='text/javascript'>
-
-var map;
-
-function GetMap() {
-
-map = new Microsoft.Maps.Map('#myMap', {
-
-credentials: 'Aoqwq4MnPOtVqxAFpjmjLSCMwmgpxjcgNVJa9y50KRNOxCNVXXg30Eopyg9i5jrc',
-
-center: new Microsoft.Maps.Location(47.614, -122.165),
-
-zoom: 2
-
-});
-
-//Load the Spatial Data Services module.
-
-Microsoft.Maps.loadModule('Microsoft.Maps.SpatialDataService', function () {
-
-//Create an array of state boundaries to retrieve.
-
-var states = ['Dubai', 'California', 'nevada', 'utah', 'arizona', 'colorado', 'dc', 'maryland', 'new york', 'British Columbia', 'Beijing', 'England', 'Scotland', 'Northern Island'];
-
-//Create geoData request options to retrieve state boundaries.
-
-var stateRequestOptions = {
-
-entityType: 'AdminDivision1',
-
-getAllPolygons: false,
-
-};
-
-//Use the GeoData API manager to get the State.
-
-Microsoft.Maps.SpatialDataService.GeoDataAPIManager.getBoundary(states, stateRequestOptions, map, function (data) {
-
-if (data.results && data.results.length > 0) {
-
-map.entities.push(data.results[0].Polygons);
-
-}
-
-});
-
-//Create an array of country boundaries to retrieve.
-
-var CountryRegion = ['New Zealand', 'Australia', 'Japan', 'Singapore', 'Russia', 'France', 'Netherland', 'South Korea', 'Tonga', 'Ireland', 'Mongolia'];
-
-//Create geoData request options to retrieve country boundaries.
-
-var countryRequestOptions = {
-
-entityType: 'CountryRegion',
-
-getAllPolygons: true,
-
-};
-
-//Use the GeoData API manager to retrieve the country boundaries.
-
-Microsoft.Maps.SpatialDataService.GeoDataAPIManager.getBoundary(CountryRegion, countryRequestOptions, map, function (data) {
-
-if (data.results && data.results.length > 0) {
-
-map.entities.push(data.results[0].Polygons);
-
-}
-
-});
-
-});
-
-var center = map.getCenter();
-
-var polyline = new Microsoft.Maps.Polyline([new Microsoft.Maps.Location(-31.930627, 115.744237),
-
-new Microsoft.Maps.Location(-31.930627, 115.744237),
-
-new Microsoft.Maps.Location(-31.724948, 115.515871),
-
-new Microsoft.Maps.Location(-31.531334, 115.307852),
-
-new Microsoft.Maps.Location(-31.349785, 115.120182),
-
-new Microsoft.Maps.Location(-31.180301, 114.952858),
-
-new Microsoft.Maps.Location(-31.022883, 114.805882),
-
-new Microsoft.Maps.Location(-30.877529, 114.679254),
-
-new Microsoft.Maps.Location(-30.74424, 114.572973),
-
-new Microsoft.Maps.Location(-30.615811, 114.478789),
-
-new Microsoft.Maps.Location(-30.485035, 114.388451),
-
-new Microsoft.Maps.Location(-30.351913, 114.301959),
-
-new Microsoft.Maps.Location(-30.216444, 114.219313),
-
-new Microsoft.Maps.Location(-30.07863, 114.140512),
-
-new Microsoft.Maps.Location(-29.938469, 114.065558),
-
-new Microsoft.Maps.Location(-31.022883, 114.805882),
-
-new Microsoft.Maps.Location(-30.877529, 114.679254),
-
-new Microsoft.Maps.Location(-30.74424, 114.572973),
-
-new Microsoft.Maps.Location(-30.615811, 114.478789),
-
-new Microsoft.Maps.Location(-30.485035, 114.388451),
-
-new Microsoft.Maps.Location(-30.351913, 114.301959),
-
-new Microsoft.Maps.Location(-30.216444, 114.219313),
-
-new Microsoft.Maps.Location(-30.07863, 114.140512),
-
-new Microsoft.Maps.Location(-29.938469, 114.065558),
-
-new Microsoft.Maps.Location(-29.795962, 113.994449),
-
-new Microsoft.Maps.Location(-29.651509, 113.927379),
-
-new Microsoft.Maps.Location(-29.505514, 113.864542),
-
-new Microsoft.Maps.Location(-29.357974, 113.805938),
-
-new Microsoft.Maps.Location(-29.208891, 113.751565),
-
-new Microsoft.Maps.Location(-29.058264, 113.701425),
-
-new Microsoft.Maps.Location(-28.906094, 113.655518),
-
-new Microsoft.Maps.Location(-28.75238, 113.613843),
-
-new Microsoft.Maps.Location(-28.597554, 113.576511),
-
-new Microsoft.Maps.Location(-28.442048, 113.543632),
-
-new Microsoft.Maps.Location(-28.285861, 113.515207),
-
-new Microsoft.Maps.Location(-28.128993, 113.491235),
-
-new Microsoft.Maps.Location(-27.971445, 113.471716),
-
-new Microsoft.Maps.Location(-27.813216, 113.456651),
-
-new Microsoft.Maps.Location(-27.654307, 113.44604),
-
-new Microsoft.Maps.Location(-27.483892, 113.441556),
-
-new Microsoft.Maps.Location(-27.291145, 113.444875),
-
-new Microsoft.Maps.Location(-27.076066, 113.455997),
-
-new Microsoft.Maps.Location(-26.838656, 113.474921),
-
-new Microsoft.Maps.Location(-26.578913, 113.501648),
-
-new Microsoft.Maps.Location(-26.296839, 113.536178),
-
-new Microsoft.Maps.Location(-25.992434, 113.57851)], null);
-
-map.entities.push(polyline);
-
-}
-
-</script>
-
-<script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?branch=experimental&callback=loadMapScenario' async defer></script>      
-
-
+<iframe width="800" height="600" src="https://app.powerbi.com/view?r=eyJrIjoiMjBhMmE5ZmEtOGJjMS00OTk1LWE1MDgtMmMwNWJlZjNmYmE2IiwidCI6ImFhZDc5OGRkLTY5ZmEtNDM3Yi05NDllLTE4YTU2YjEwOTRlMCJ9" frameborder="0" allowFullScreen="true"></iframe>    
 
 </div>
 
 
-
-
-
  
-
  
-
 </body>
-
-
 
   
-
    
-
 </body>
-
 </html> 
+
