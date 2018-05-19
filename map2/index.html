@@ -16,8 +16,32 @@
 <div class="desktop-view" style="display: block;">
     <div id="reportContainer"></div>
   
-  <iframe width="800" height="600" src="https://app.powerbi.com/view?r=eyJrIjoiMjBhMmE5ZmEtOGJjMS00OTk1LWE1MDgtMmMwNWJlZjNmYmE2IiwidCI6ImFhZDc5OGRkLTY5ZmEtNDM3Yi05NDllLTE4YTU2YjEwOTRlMCJ9" frameborder="0" allowFullScreen="true"></iframe>
+</div> 
+
+ var embedConfig = {
+                    type: type,
+                    id: id,
+                    embedUrl: embedUrl,
+                    viewMode: getViewModeFromModel(viewMode),
+                    tokenType: models.TokenType.Aad,
+                    accessToken: token,
+                    pageView: 'fitToWidth', // applies to Dashboard only; for Report, see below
+                    pageName: pageName,
+
+                    // See https://microsoft.github.io/PowerBI-JavaScript/interfaces/_node_modules_powerbi_models_dist_models_d_.isettings.html
+                    settings: {
+                        filterPaneEnabled: true,
+                        navContentPaneEnabled: true,
+                        background: models.BackgroundType.Transparent,
+                        // START Report specific settings
+                        layoutType: models.LayoutType.Custom,
+                        customLayout: {
+                            displayOption: models.DisplayOption.FitToWidth
+                        }
+                        // END Report specific settings
+                    }
+                }
+
+ <iframe width="800" height="600" src="https://app.powerbi.com/view?r=eyJrIjoiMjBhMmE5ZmEtOGJjMS00OTk1LWE1MDgtMmMwNWJlZjNmYmE2IiwidCI6ImFhZDc5OGRkLTY5ZmEtNDM3Yi05NDllLTE4YTU2YjEwOTRlMCJ9" frameborder="0" allowFullScreen="true"></iframe>
 </div>
-
-
 </html>
