@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 
+<script>
 // Get models. models contains enums that can be used.
 var models = window['powerbi-client'].models;
 
@@ -52,9 +53,9 @@ var embedConfiguration = {
 var embedContainer = document.getElementById('embedContainer');
  
 // Embed the report and display it within the div container.
-var report = powerbi.embed(embedContainer, embedConfiguration);
+var report = powerbi.embed(embedContainer, embedConfiguration)
 
-	...
+</script>
   
 
 </html>
