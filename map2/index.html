@@ -1,47 +1,60 @@
 <!DOCTYPE html>
 
-  <style>
-    #reportContainer {
-        width: 100%;
-        height: 750px;
-        background-color: white;
-        padding: 0px;
-        clear: both;
-    }
-    .desktop-view iframe, .mobile-view iframe {
-        border: none;
-    }
-</style>
-<h2>Sample PowerBI Embedded Report</h2>
-<div class="desktop-view" style="display: block;">
-    <div id="reportContainer"></div>
-  
-</div> 
-<script>
- var embedConfig = {
-                    type: type,
-                    id: id,
-                    embedUrl: embedUrl,
-                    viewMode: getViewModeFromModel(viewMode),
-                    tokenType: models.TokenType.Aad,
-                    accessToken: token,
-                    pageView: 'fitToWidth', // applies to Dashboard only; for Report, see below
-                    pageName: pageName,
+// Get models. models contains enums that can be used.
+var models = window['powerbi-client'].models;
 
-                    // See https://microsoft.github.io/PowerBI-JavaScript/interfaces/_node_modules_powerbi_models_dist_models_d_.isettings.html
-                    settings: {
-                        filterPaneEnabled: true,
-                        navContentPaneEnabled: true,
-                        background: models.BackgroundType.Transparent,
-                        // START Report specific settings
-                        layoutType: models.LayoutType.Custom,
-                        customLayout: {
-                            displayOption: models.DisplayOption.FitToWidth
-                        }
-                        // END Report specific settings
-                    }
-                }
-</script>
- <iframe width="800" height="600" src="https://app.powerbi.com/view?r=eyJrIjoiMjBhMmE5ZmEtOGJjMS00OTk1LWE1MDgtMmMwNWJlZjNmYmE2IiwidCI6ImFhZDc5OGRkLTY5ZmEtNDM3Yi05NDllLTE4YTU2YjEwOTRlMCJ9" frameborder="0" allowFullScreen="true"></iframe>
-</div>
+var embedConfiguration = {
+	type: 'report',
+	id: '5dac7a4a-4452-46b3-99f6-a25915e0fe55',
+	embedUrl: 'https://app.powerbi.com/view?r=eyJrIjoiMjBhMmE5ZmEtOGJjMS00OTk1LWE1MDgtMmMwNWJlZjNmYmE2IiwidCI6ImFhZDc5OGRkLTY5ZmEtNDM3Yi05NDllLTE4YTU2YjEwOTRlMCJ9',
+	tokenType: models.TokenType.Embed,
+	accessToken: 'H4...rf',
+	settings: {
+		layoutType: models.LayoutType.Custom
+		customLayout: {
+			pageSize: {
+				type: models.PageSizeType.Custom,
+				width: 1600,
+				height: 1200
+			},
+			displayOption: models.DisplayOption.ActualSize,
+			pagesLayout: {
+				"ReportSection1" : {
+					defaultLayout: {
+						displayState: {
+							mode: models.VisualContainerDisplayMode.Hidden
+						}
+					},
+					visualsLayout: {
+						"VisualContainer1": {
+							x: 1,
+							y: 1,
+							z: 1,
+							width: 400,
+							height: 300,
+							displayState: {
+								mode: models.VisualContainerDisplayMode.Visible
+							}
+						},
+						"VisualContainer2": {
+							displayState: {
+								mode: models.VisualContainerDisplayMode.Visible
+							}
+						},
+					}
+				}
+			}
+		}
+	}
+};
+ 
+// Get a reference to the embedded report HTML element
+var embedContainer = document.getElementById('embedContainer');
+ 
+// Embed the report and display it within the div container.
+var report = powerbi.embed(embedContainer, embedConfiguration);
+
+	...
+  
+
 </html>
