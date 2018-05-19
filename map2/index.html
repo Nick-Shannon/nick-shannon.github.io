@@ -1,3 +1,23 @@
 <!DOCTYPE html>
-<iframe width="800" height="600" src="https://app.powerbi.com/view?r=eyJrIjoiMjBhMmE5ZmEtOGJjMS00OTk1LWE1MDgtMmMwNWJlZjNmYmE2IiwidCI6ImFhZDc5OGRkLTY5ZmEtNDM3Yi05NDllLTE4YTU2YjEwOTRlMCJ9" frameborder="0" allowFullScreen="true"></iframe>
+
+  <style>
+    #reportContainer {
+        width: 100%;
+        height: 750px;
+        background-color: white;
+        padding: 0px;
+        clear: both;
+    }
+    .desktop-view iframe, .mobile-view iframe {
+        border: none;
+    }
+</style>
+<h2>Sample PowerBI Embedded Report</h2>
+<div class="desktop-view" style="display: block;">
+    <div id="reportContainer"></div>
+  
+  <iframe width="800" height="600" src="https://app.powerbi.com/view?r=eyJrIjoiMjBhMmE5ZmEtOGJjMS00OTk1LWE1MDgtMmMwNWJlZjNmYmE2IiwidCI6ImFhZDc5OGRkLTY5ZmEtNDM3Yi05NDllLTE4YTU2YjEwOTRlMCJ9" frameborder="0" allowFullScreen="true"></iframe>
+</div>
+
+
 </html>
