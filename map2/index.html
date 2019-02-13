@@ -12,12 +12,15 @@
         });
         
         //Create an array of locations to get the boundaries of 
+        //Load the Spatial Data Services module.
+        Microsoft.Maps.loadModule('Microsoft.Maps.SpatialDataService', function () {
+        //Create an array of state boundaries to retrieve.
         var states = ['Russia', 'France', 'Italy'];
         var geoDataRequestOptions = {
         entityType: 'CountryRegion',
         getAllPolygons: false,
         };
-        Microsoft.Maps.loadModule('Microsoft.Maps.SpatialDataService', function () {
+       
         //Use the GeoData API manager to get the State
         Microsoft.Maps.SpatialDataService.GeoDataAPIManager.getBoundary(states, geoDataRequestOptions, map, function (data) {
         if (data.results && data.results.length > 0) {
