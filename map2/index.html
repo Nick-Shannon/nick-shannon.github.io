@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Map2.5</title>
+    <title>Map2.6</title>
     <meta charset="utf-8" />
     <script type='text/javascript'>
     function GetMap() {
@@ -14,7 +14,8 @@
         //Create an array of locations to get the boundaries of 
         var states = ['Russia', 'France', 'Italy'];
         var geoDataRequestOptions = {
-        entityType: 'CountryRegion'
+        entityType: 'CountryRegion',
+        getAllPolygons: false,
         };
         Microsoft.Maps.loadModule('Microsoft.Maps.SpatialDataService', function () {
         //Use the GeoData API manager to get the State
