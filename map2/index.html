@@ -6,36 +6,36 @@
     <script type='text/javascript'>
     function GetMap() {
         //Create an array of locations to get the boundaries of 
-var states = ['Doha', 'Dubai', 'California', 'nevada', 'utah', 'arizona', 'colorado', 'dc', 'maryland', 'new york', 'British Columbia', 'Beijing', 'Montana', 'England', 'Scotland', 'Northern Island'];
-var geoDataRequestOptions = {
-entityType: 'AdminDivision1'
-};
-Microsoft.Maps.loadModule('Microsoft.Maps.SpatialDataService', function () {
-//Use the GeoData API manager to get the State
-Microsoft.Maps.SpatialDataService.GeoDataAPIManager.getBoundary(states, geoDataRequestOptions, map, function (data) {
-if (data.results && data.results.length > 0) {
-map.entities.push(data.results[0].Polygons);
-}
-});	
-});
-//Create an array of locations to get the boundaries of 
-var states = ['Russia', 'France', 'Italy'];
-var geoDataRequestOptions = {
-entityType: 'CountryRegion'
-};
-Microsoft.Maps.loadModule('Microsoft.Maps.SpatialDataService', function () {
-//Use the GeoData API manager to get the State
-Microsoft.Maps.SpatialDataService.GeoDataAPIManager.getBoundary(states, geoDataRequestOptions, map, function (data) {
-if (data.results && data.results.length > 0) {
-map.entities.push(data.results[0].Polygons);
-}
-});	
-}); 
-//Create an array of locations to get the boundaries of 
-var countries = ['Austria','Switzerland','Italy','New Zealand','Australia','Japan', 'Singapore','Colombia', 'Peru', 'Netherland','South Korea','Tonga','Ireland','Mongolia']; 
-var geoDataRequestOptions = { 
-getAllPolygons: true 
-}; 
+       var states = ['Doha', 'Dubai', 'California', 'nevada', 'utah', 'arizona', 'colorado', 'dc', 'maryland', 'new york', 'British Columbia', 'Beijing', 'Montana', 'England', 'Scotland', 'Northern Island'];
+        var geoDataRequestOptions = {
+        entityType: 'AdminDivision1'
+        };
+        Microsoft.Maps.loadModule('Microsoft.Maps.SpatialDataService', function () {
+        //Use the GeoData API manager to get the State
+        Microsoft.Maps.SpatialDataService.GeoDataAPIManager.getBoundary(states, geoDataRequestOptions, map, function (data) {
+        if (data.results && data.results.length > 0) {
+        map.entities.push(data.results[0].Polygons);
+        }
+        });	
+        });
+        //Create an array of locations to get the boundaries of 
+        var states = ['Russia', 'France', 'Italy'];
+        var geoDataRequestOptions = {
+        entityType: 'CountryRegion'
+        };
+        Microsoft.Maps.loadModule('Microsoft.Maps.SpatialDataService', function () {
+        //Use the GeoData API manager to get the State
+        Microsoft.Maps.SpatialDataService.GeoDataAPIManager.getBoundary(states, geoDataRequestOptions, map, function (data) {
+        if (data.results && data.results.length > 0) {
+        map.entities.push(data.results[0].Polygons);
+        }
+        });	
+        }); 
+        //Create an array of locations to get the boundaries of 
+        var countries = ['Austria','Switzerland','Italy','New Zealand','Australia','Japan', 'Singapore','Colombia', 'Peru', 'Netherland','South Korea','Tonga','Ireland','Mongolia']; 
+        var geoDataRequestOptions = { 
+        getAllPolygons: true 
+        }; 
 Microsoft.Maps.loadModule('Microsoft.Maps.SpatialDataService', function () { 
 //Use the GeoData API manager to get the boundary 
 Microsoft.Maps.SpatialDataService.GeoDataAPIManager.getBoundary(countries, geoDataRequestOptions, map, function (data) { 
