@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Map2.3</title>
+    <title>Map2.4</title>
     <meta charset="utf-8" />
     <script type='text/javascript'>
     function GetMap() {
@@ -28,17 +28,16 @@
         //Create an array of locations to get the boundaries of 
         var countries = ['Austria','Switzerland','Italy','New Zealand','Australia','Japan', 'Singapore','Colombia', 'Peru', 'Netherland','South Korea','Tonga','Ireland','Mongolia']; 
         var geoDataRequestOptions = { 
-        getAllPolygons: true 
-
+        entityType: 'Country'
         }; 
         Microsoft.Maps.loadModule('Microsoft.Maps.SpatialDataService', function () { 
-//Use the GeoData API manager to get the boundary 
-Microsoft.Maps.SpatialDataService.GeoDataAPIManager.getBoundary(countries, geoDataRequestOptions, map, function (data) { 
-if (data.results && data.results.length > 0) { 
-map.entities.push(data.results[0].Polygons); 
-} 
-}); 
-});
+        //Use the GeoData API manager to get the boundary 
+        Microsoft.Maps.SpatialDataService.GeoDataAPIManager.getBoundary(countries, geoDataRequestOptions, map, function (data) { 
+        if (data.results && data.results.length > 0) { 
+        map.entities.push(data.results[0].Polygons); 
+        } 
+        }); 
+        });
         
        
     }
