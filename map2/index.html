@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Map2.7</title>
+    <title>Map2.9</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="/css/main.css">
@@ -39,8 +39,7 @@
             var geoDataRequestOptions = { 
                 entityType: 'CountryRegion',
                 getAllPolygons: true,
-            }; 
-            Microsoft.Maps.loadModule('Microsoft.Maps.SpatialDataService', function () { 
+            };  
             //Use the GeoData API manager to get the boundary 
             Microsoft.Maps.SpatialDataService.GeoDataAPIManager.getBoundary(countries2, geoDataRequestOptions, map, function (data) { 
                 if (data.results && data.results.length > 0) { 
@@ -54,7 +53,6 @@
                 entityType: 'AdminDivision1',
                 getAllPolygons: true,
             };
-            Microsoft.Maps.loadModule('Microsoft.Maps.SpatialDataService', function () {
             //Use the GeoData API manager to get the State
             Microsoft.Maps.SpatialDataService.GeoDataAPIManager.getBoundary(states1, geoDataRequestOptions, map, function (data) {
                 if (data.results && data.results.length > 0) {
