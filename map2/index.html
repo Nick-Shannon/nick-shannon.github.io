@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Map2.9</title>
+    <title>Map2.1</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="/css/main.css">
@@ -15,6 +15,51 @@
             zoom: 3        
         });
         
+            
+            //Create a layer 
+            var layer1 = new Microsoft.Maps.Layer(); 
+
+            //Add zoom information as metadata of the layer. 
+             layer1.metadata = { 
+             zoomRange: { min: 3, max: 3 } 
+             }; 
+
+
+            var pushpin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(36.681399, 127.270947), { icon: 'https://nickspxts.files.wordpress.com/2019/02/travel_map_logo3.png', anchor: new Microsoft.Maps.Point(0, 0) });
+
+            //Add pushpins 
+            layer1.add((pushpin)); 
+
+            //Add layer to map. 
+            map.layers.insert(layer1); 
+
+
+            //Add a viewchangeend event to the map so that it updates the visibility of the layers. 
+            Microsoft.Maps.Events.addHandler(map, 'viewchangeend', updateLayerVisibility); 
+
+            //Do an initial update of the visibility. 
+            updateLayerVisibility(); 
+
+
+            function updateLayerVisibility() { 
+            //Get the current zoom level of the map. 
+            var zoom = map.getZoom(); 
+            var layer; 
+
+        //Loop through the layers in the map and check to see if it has zoomRange metadata. 
+        for(var i=0;i<map.layers.length;i++){ 
+        layer = map.layers[i]; 
+
+        if(layer.metadata && layer.metadata.zoomRange){ 
+        if (zoom >= layer.metadata.zoomRange.min && zoom <= layer.metadata.zoomRange.max) { 
+        layer.setVisible(true); 
+        } else { 
+        layer.setVisible(false); 
+        } 
+        } 
+        } 
+}
+
      
             //Load the Spatial Data Services module.
             Microsoft.Maps.loadModule('Microsoft.Maps.SpatialDataService', function () {
