@@ -9,7 +9,7 @@
     var map;   
     
         function GetMap() {
-            map = new Microsoft.Maps.Map('#myMap',  { 
+            var map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
                 credentials: 'Aoqwq4MnPOtVqxAFpjmjLSCMwmgpxjcgNVJa9y50KRNOxCNVXXg30Eopyg9i5jrc', 
                 center: new Microsoft.Maps.Location(15.605063, 151.849664), 
                 Zoom: 2             
