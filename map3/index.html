@@ -1,1 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Map2.5</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <script type='text/javascript'>
+    var map;   
+    
+        function GetMap() {
+           var map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
+            credentials: 'Aoqwq4MnPOtVqxAFpjmjLSCMwmgpxjcgNVJa9y50KRNOxCNVXXg30Eopyg9i5jrc', 
+            center: new Microsoft.Maps.Location(4.318729, 148.452588),
+            zoom: 3        
+        });
+        
+            
+            //Create a layer 
+            var layer1 = new Microsoft.Maps.Layer(); 
 
+            //Add zoom information as metadata of the layer. 
+             layer1.metadata = { 
+             zoomRange: { min: 3, max: 3 } 
+             }; 
+
+
+            var pushpin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(36.681399, 127.270947), { icon: 'https://www.gitcdn.xyz/repo/Nick-Shannon/9f47c0a311373fe90dbf5034f67bd3ad/raw/1635a8f2c0cbe61699e88e58b7c7a2a9f853c97d/travel.svg', anchor: new Microsoft.Maps.Point(0, 0) });
+
+            //Add pushpins 
+            layer1.add((pushpin)); 
+
+            //Add layer to map. 
+            map.layers.insert(layer1); 
+
+
+            //Add a viewchangeend event to the map so that it updates the visibility of the layers. 
+            Microsoft.Maps.Events.addHandler(map, 'viewchangeend', updateLayerVisibility); 
+
+            //Do an initial update of the visibility. 
+            updateLayerVisibility(); 
+
+
+            function updateLayerVisibility() { 
+            //Get the current zoom level of the map. 
+            var zoom = map.getZoom(); 
+            var layer; 
+
+        //Loop through the layers in the map and check to see if it has zoomRange metadata. 
+        for(var i=0;i<map.layers.length;i++){ 
+        layer = map.layers[i]; 
+
+        if(layer.metadata && layer.metadata.zoomRange){ 
+        if (zoom >= layer.metadata.zoomRange.min && zoom <= layer.metadata.zoomRange.max) { 
+        layer.setVisible(true); 
+        } else { 
+        layer.setVisible(false); 
+        } 
+        } 
+        } 
+}
+
+     
+            //Load the Spatial Data Services module.
+            Microsoft.Maps.loadModule('Microsoft.Maps.SpatialDataService', function () {
+            //Create an array of state boundaries to retrieve.
+       
+            var countries1 = ['Russia', 'France', 'Italy'];
+            var geoDataRequestOptions = {
+                entityType: 'CountryRegion',
+                getAllPolygons: false,  
+            };
+            //Use the GeoData API manager to get the State
+            Microsoft.Maps.SpatialDataService.GeoDataAPIManager.getBoundary(countries1, geoDataRequestOptions, map, function (data) {
+                if (data.results && data.results.length > 0) {
+                map.entities.push(data.results[0].Polygons);
+                }
+            });	
+       	 
+        
+      
+            //Create an array of locations to get the boundaries of 
+            var countries2 = ['Japan','Austria','Switzerland','New Zealand', 'Singapore','Colombia', 'Peru', 'Netherland','South Korea','Tonga','Ireland','Mongolia']; 
+            var geoDataRequestOptions = { 
+                entityType: 'CountryRegion',
+                getAllPolygons: true,
+            };  
+            //Use the GeoData API manager to get the boundary 
+            Microsoft.Maps.SpatialDataService.GeoDataAPIManager.getBoundary(countries2, geoDataRequestOptions, map, function (data) { 
+                if (data.results && data.results.length > 0) { 
+                map.entities.push(data.results[0].Polygons); 
+                } 
+            });	
+  
+            //Create an array of locations to get the boundaries of 
+            var states1 = ['Victoria, Australia', 'Western Australia', 'Northern Territory', 'Queensland', 'New South Wales', 'Doha', 'Dubai', 'California', 'nevada', 'utah', 'arizona', 'colorado', 'dc', 'maryland', 'new york', 'British Columbia', 'Beijing', 'Montana', 'England', 'Scotland', 'Northern Ireland'];
+            var geoDataRequestOptions = {
+                entityType: 'AdminDivision1',
+                getAllPolygons: true,
+            };
+            //Use the GeoData API manager to get the State
+            Microsoft.Maps.SpatialDataService.GeoDataAPIManager.getBoundary(states1, geoDataRequestOptions, map, function (data) {
+                if (data.results && data.results.length > 0) {
+                map.entities.push(data.results[0].Polygons);
+                }
+            }); 
+        }); 
+       
+       
+    }
+    </script>
+    <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=AgmExgPK-Ij7H84tUYfRTcxyqIJFfeBncXCU9VKbXTtLZOinxBX-7eVvNqFU8JZC' async defer></script>
+    
+
+    
+    
+</head>
+<body>
+    <div id="myMap" style="width:auto;height:auto;"></div> 
+</body>
+</html>
