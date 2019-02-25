@@ -1,11 +1,18 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Map2.5</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="/css/main.css">
-    <script type='text/javascript'>
+<title>W3.CSS Template</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<style>
+body {font-family: "Times New Roman", Georgia, Serif;}
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Playfair Display";
+  letter-spacing: 5px;
+}
+</style>
+
+<script type='text/javascript'>
     var map;   
     
         function GetMap() {
@@ -18,38 +25,26 @@
             
             //Create a layer 
             var layer1 = new Microsoft.Maps.Layer(); 
-
             //Add zoom information as metadata of the layer. 
              layer1.metadata = { 
              zoomRange: { min: 3, max: 3 } 
              }; 
-
-
             var pushpin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(36.681399, 127.270947), { icon: 'https://www.gitcdn.xyz/repo/Nick-Shannon/9f47c0a311373fe90dbf5034f67bd3ad/raw/1635a8f2c0cbe61699e88e58b7c7a2a9f853c97d/travel.svg', anchor: new Microsoft.Maps.Point(0, 0) });
-
             //Add pushpins 
             layer1.add((pushpin)); 
-
             //Add layer to map. 
             map.layers.insert(layer1); 
-
-
             //Add a viewchangeend event to the map so that it updates the visibility of the layers. 
             Microsoft.Maps.Events.addHandler(map, 'viewchangeend', updateLayerVisibility); 
-
             //Do an initial update of the visibility. 
             updateLayerVisibility(); 
-
-
             function updateLayerVisibility() { 
             //Get the current zoom level of the map. 
             var zoom = map.getZoom(); 
             var layer; 
-
         //Loop through the layers in the map and check to see if it has zoomRange metadata. 
         for(var i=0;i<map.layers.length;i++){ 
         layer = map.layers[i]; 
-
         if(layer.metadata && layer.metadata.zoomRange){ 
         if (zoom >= layer.metadata.zoomRange.min && zoom <= layer.metadata.zoomRange.max) { 
         layer.setVisible(true); 
@@ -59,7 +54,6 @@
         } 
         } 
 }
-
      
             //Load the Spatial Data Services module.
             Microsoft.Maps.loadModule('Microsoft.Maps.SpatialDataService', function () {
@@ -112,10 +106,30 @@
     <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=AgmExgPK-Ij7H84tUYfRTcxyqIJFfeBncXCU9VKbXTtLZOinxBX-7eVvNqFU8JZC' async defer></script>
     
 
-    
-    
-</head>
+
+
+
+
 <body>
-    <div id="myMap" style="width:auto;height:auto;"></div> 
+
+<!-- Navbar (sit on top) -->
+<div class="w3-top">
+  <div class="w3-bar w3-white w3-padding w3-card" style="letter-spacing:4px;">
+    <a href="#home" class="w3-bar-item w3-button">Gourmet au Catering</a>
+    <!-- Right-sided navbar links. Hide them on small screens -->
+    <div class="w3-right w3-hide-small">
+      <a href="#about" class="w3-bar-item w3-button">About</a>
+      <a href="#menu" class="w3-bar-item w3-button">Menu</a>
+      <a href="#contact" class="w3-bar-item w3-button">Contact</a>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Page content -->
+<div id="myMap" style="width:auto;height:auto;"></div> 
+
+
 </body>
 </html>
