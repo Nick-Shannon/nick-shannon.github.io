@@ -24,7 +24,6 @@
              zoomRange: { min: 3, max: 3 } 
              }; 
 
-
             var pushpin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(36.681399, 127.270947), { icon: 'https://www.gitcdn.xyz/repo/Nick-Shannon/9f47c0a311373fe90dbf5034f67bd3ad/raw/1635a8f2c0cbe61699e88e58b7c7a2a9f853c97d/travel.svg', anchor: new Microsoft.Maps.Point(0, 0) });
 
             //Add pushpins 
@@ -60,7 +59,16 @@
         } 
 }
 
+            /////////////////////////////////////////////////////////////////////////////////////////////
      
+                        //Create a layer 
+            var layer3 = new Microsoft.Maps.Layer(); 
+            
+            //Add zoom information as metadata of the layer. 
+             layer3.metadata = { 
+             zoomRange: { min: 1, max: 10 } 
+             }; 
+            
             //Load the Spatial Data Services module.
             Microsoft.Maps.loadModule('Microsoft.Maps.SpatialDataService', function () {
             //Create an array of state boundaries to retrieve.
@@ -76,6 +84,44 @@
                 map.entities.push(data.results[0].Polygons);
                 }
             });	
+                
+            //Add Countries 
+            layer3.add((countries1)); 
+
+            //Add layer to map. 
+            map.layers.insert(layer3); 
+
+
+            //Add a viewchangeend event to the map so that it updates the visibility of the layers. 
+            Microsoft.Maps.Events.addHandler(map, 'viewchangeend', updateLayerVisibility); 
+
+            //Do an initial update of the visibility. 
+            updateLayerVisibility(); 
+
+
+            function updateLayerVisibility() { 
+            //Get the current zoom level of the map. 
+            var zoom = map.getZoom(); 
+            var layer; 
+
+        //Loop through the layers in the map and check to see if it has zoomRange metadata. 
+        for(var i=0;i<map.layers.length;i++){ 
+        layer = map.layers[i]; 
+
+        if(layer.metadata && layer.metadata.zoomRange){ 
+        if (zoom >= layer.metadata.zoomRange.min && zoom <= layer.metadata.zoomRange.max) { 
+        layer.setVisible(true); 
+        } else { 
+        layer.setVisible(false); 
+        } 
+        } 
+        } 
+}    
+                
+                
+                
+                
+           ///////////////////////////////////////////////////////////////////////////////////     
        	 
         
       
