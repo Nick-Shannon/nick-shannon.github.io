@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Map2.7</title>
+    <title>Map2.9</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="/css/main.css">
@@ -15,13 +15,19 @@
             zoom: 3        
         });
         
+
+            var layer4 = new Microsoft.Maps.Layer();         
             var pushpin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(43.506484, 142.576775), { icon: 'https://www.gitcdn.xyz/repo/Nick-Shannon/4235c3f97352e8c5c4b03f56ad3d60bf/raw/33636033778fc1434a18c36cb9f6ce87507a17ac/point.svg',
             anchor: new Microsoft.Maps.Point(12, 39) });
             map.entities.push(pushpin);
             Microsoft.Maps.Events.addHandler(pushpin, 'click', function (args) { map.setView({ center: args.target.getLocation(), zoom: 15 }); });
             document.getElementById('printoutPanel').innerHTML = '<b>Pushpin has click handler</b> <br>' + Microsoft.Maps.Events.hasHandler(pushpin, 'click');
+            //Add pushpins 
+            layer4.add((pushpin)); 
 
-
+            //Add layer to map. 
+            map.layers.insert(layer4); 
+            
             
             
             //Create a layer 
