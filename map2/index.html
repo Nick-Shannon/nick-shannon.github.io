@@ -1,140 +1,218 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Map2.2</title>
-    <meta charset="utf-8">
+
+  <head>
+    <title>adddefaultpushpinHTML</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <style type='text/css'>
+      body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        font-family: 'Segoe UI', Helvetica, Arial, Sans-Serif
+      }
+
+    </style>
+
+
+  </head>
+
+  <body>
+    <div id='printoutPanel'></div>
+    <div id='myMap' style='width: 100vw; height: 100vh;'></div>
+
+
     <script type='text/javascript'>
-    var map;   
-    
-        function GetMap() {
-           var map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
-            credentials: 'Aoqwq4MnPOtVqxAFpjmjLSCMwmgpxjcgNVJa9y50KRNOxCNVXXg30Eopyg9i5jrc', 
-            center: new Microsoft.Maps.Location(4.318729, 148.452588),
-            zoom: 3        
+      var map;
+
+      function GetMap() {
+        var map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
+          credentials: 'Aoqwq4MnPOtVqxAFpjmjLSCMwmgpxjcgNVJa9y50KRNOxCNVXXg30Eopyg9i5jrc',
+          center: new Microsoft.Maps.Location(4.318729, 148.452588),
+          zoom: 3
+
         });
-        
-    
-            
-            //Create a layer 
-            var layer1 = new Microsoft.Maps.Layer(); 
-
-            //Add zoom information as metadata of the layer. 
-             layer1.metadata = { 
-             zoomRange: { min: 3, max: 3 } 
-             }; 
 
 
-            var pushpin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(36.681399, 127.270947), { icon: 'https://www.gitcdn.xyz/repo/Nick-Shannon/9f47c0a311373fe90dbf5034f67bd3ad/raw/1635a8f2c0cbe61699e88e58b7c7a2a9f853c97d/travel.svg', anchor: new Microsoft.Maps.Point(0, 0) });
+        ///////////////////////////////////////////////////////
+        //Title
+        var layer2 = new Microsoft.Maps.Layer();
+        //Add zoom information as metadata of the layer. 
+        layer2.metadata = {
+          zoomRange: {
+            min: 3,
+            max: 3
+          }
+        };
+        var pushpin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(29.778736, 128.295643), {
+          icon: 'https://www.gitcdn.xyz/repo/Nick-Shannon/cd3ec25ee6418959bb0b6788bae3af05/raw/65f909930f8f00ecd40db923f7350c8e4668710f/travel2.svg',
+          anchor: new Microsoft.Maps.Point(0, 0)
+        });
+        //Add pushpins 
+        layer2.add((pushpin));
+        //Add layer to map. 
+        map.layers.insert(layer2);
 
-            //Add pushpins 
-            layer1.add((pushpin)); 
 
-            //Add layer to map. 
-            map.layers.insert(layer1); 
+        //////////////////////////////////////////////////////
+        //Pushin Zooms 1
+        var layer3 = new Microsoft.Maps.Layer();
+
+        //Add zoom information as metadata of the layer. 
+        layer3.metadata = {
+          zoomRange: {
+            min: 3,
+            max: 10
+          }
+        };
 
 
-            //Add a viewchangeend event to the map so that it updates the visibility of the layers. 
-            Microsoft.Maps.Events.addHandler(map, 'viewchangeend', updateLayerVisibility); 
+        var pushpin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(43.506484, 142.576775), {
+          icon: 'https://www.gitcdn.xyz/repo/Nick-Shannon/4235c3f97352e8c5c4b03f56ad3d60bf/raw/33636033778fc1434a18c36cb9f6ce87507a17ac/point.svg',
+          anchor: new Microsoft.Maps.Point(12, 28)
+        });
 
-            //Do an initial update of the visibility. 
-            updateLayerVisibility(); 
+        layer3.add(pushpin);
+        Microsoft.Maps.Events.addHandler(pushpin, 'click', function(args) {
+          map.setView({
+            center: args.target.getLocation(),
+            zoom: 8
+          });
+        });
+
+        //Add layer to map. 
+        map.layers.insert(layer3);
 
 
-            function updateLayerVisibility() { 
-            //Get the current zoom level of the map. 
-            var zoom = map.getZoom(); 
-            var layer; 
+//////////////////////////////////////////////////////
+        //Pushin Zooms 2
+        var layer3 = new Microsoft.Maps.Layer();
 
-        //Loop through the layers in the map and check to see if it has zoomRange metadata. 
-        for(var i=0;i<map.layers.length;i++){ 
-        layer = map.layers[i]; 
+        //Add zoom information as metadata of the layer. 
+        layer3.metadata = {
+          zoomRange: {
+            min: 3,
+            max: 10
+          }
+        };
 
-        if(layer.metadata && layer.metadata.zoomRange){ 
-        if (zoom >= layer.metadata.zoomRange.min && zoom <= layer.metadata.zoomRange.max) { 
-        layer.setVisible(true); 
-        } else { 
-        layer.setVisible(false); 
-        } 
-        } 
-        } 
-}
 
-     
-            //Load the Spatial Data Services module.
-            Microsoft.Maps.loadModule('Microsoft.Maps.SpatialDataService', function () {
-            //Create an array of state boundaries to retrieve.
-       
-            var countries1 = ['Russia', 'France', 'Italy'];
-            var geoDataRequestOptions = {
-                entityType: 'CountryRegion',
-                getAllPolygons: false,  
-            };
-            //Use the GeoData API manager to get the State
-            Microsoft.Maps.SpatialDataService.GeoDataAPIManager.getBoundary(countries1, geoDataRequestOptions, map, function (data) {
-                if (data.results && data.results.length > 0) {
-                map.entities.push(data.results[0].Polygons);
-                }
-            });	
-       	 
-        
-      
-            //Create an array of locations to get the boundaries of 
-            var countries2 = ['Japan','Austria','Switzerland','New Zealand', 'Singapore','Colombia', 'Peru', 'Netherland','South Korea','Tonga','Ireland','Mongolia']; 
-            var geoDataRequestOptions = { 
-                entityType: 'CountryRegion',
-                getAllPolygons: true,
-            };  
-            //Use the GeoData API manager to get the boundary 
-            Microsoft.Maps.SpatialDataService.GeoDataAPIManager.getBoundary(countries2, geoDataRequestOptions, map, function (data) { 
-                if (data.results && data.results.length > 0) { 
-                map.entities.push(data.results[0].Polygons); 
-                } 
-            });	
-  
-            //Create an array of locations to get the boundaries of 
-            var states1 = ['Victoria, Australia', 'Western Australia', 'Northern Territory', 'Queensland', 'New South Wales', 'Doha', 'Dubai', 'California', 'nevada', 'utah', 'arizona', 'colorado', 'dc', 'maryland', 'new york', 'British Columbia', 'Beijing', 'Montana', 'England', 'Scotland', 'Northern Ireland'];
-            var geoDataRequestOptions = {
-                entityType: 'AdminDivision1',
-                getAllPolygons: true,
-            };
-            //Use the GeoData API manager to get the State
-            Microsoft.Maps.SpatialDataService.GeoDataAPIManager.getBoundary(states1, geoDataRequestOptions, map, function (data) {
-                if (data.results && data.results.length > 0) {
-                map.entities.push(data.results[0].Polygons);
-                }
-            }); 
-        }); 
- 
-            
-            var layer4 = new Microsoft.Maps.Layer();         
-            var pushpin1 = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(43.506484, 142.576775), { icon: 'https://www.gitcdn.xyz/repo/Nick-Shannon/4235c3f97352e8c5c4b03f56ad3d60bf/raw/33636033778fc1434a18c36cb9f6ce87507a17ac/point.svg',
-            anchor: new Microsoft.Maps.Point(12, 39) });
-            map.entities.push(pushpin1);
-            Microsoft.Maps.Events.addHandler(pushpin1, 'click', function (args) { map.setView({ center: args.target.getLocation(), zoom: 15 }); });
-            document.getElementById('printoutPanel').innerHTML = '<b>Pushpin has click handler</b> <br>' + Microsoft.Maps.Events.hasHandler(pushpin, 'click');
-            //Add pushpins 
-            layer4.add((pushpin1)); 
-            //Add layer to map. 
-            map.layers.insert(layer4); 
-                
-            
-            
-            
-            
-            
-            
-       
-    }
+        var pushpin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(36.457226, 138.906677), {
+          icon: 'https://www.gitcdn.xyz/repo/Nick-Shannon/4235c3f97352e8c5c4b03f56ad3d60bf/raw/33636033778fc1434a18c36cb9f6ce87507a17ac/point.svg',
+          anchor: new Microsoft.Maps.Point(12, 28)
+        });
+
+        layer3.add(pushpin);
+        Microsoft.Maps.Events.addHandler(pushpin, 'click', function(args) {
+          map.setView({
+            center: args.target.getLocation(),
+            zoom: 8
+          });
+        });
+
+        //Add layer to map. 
+        map.layers.insert(layer3);
+
+
+
+
+        /////////////////////////////////////////////////////////
+        ////////Countries 
+
+
+        var layer1 = new Microsoft.Maps.Layer();
+        //Add zoom information as metadata of the layer. 
+        layer1.metadata = {
+          zoomRange: {
+            min: 1,
+            max: 3
+          }
+        };
+
+
+        //Load the Spatial Data Services module.
+        Microsoft.Maps.loadModule('Microsoft.Maps.SpatialDataService', function() {
+          //Create an array of state boundaries to retrieve.
+
+          var countries1 = ['Russia', 'France', 'Italy'];
+          var geoDataRequestOptions = {
+            entityType: 'CountryRegion',
+            getAllPolygons: false,
+          };
+          //Use the GeoData API manager to get the State
+          Microsoft.Maps.SpatialDataService.GeoDataAPIManager.getBoundary(countries1, geoDataRequestOptions, map, function(data) {
+            if (data.results && data.results.length > 0) {
+              layer1.add((data.results[0].Polygons));
+            }
+          });
+
+
+
+
+
+          //Create an array of locations to get the boundaries of 
+          var countries2 = ['Japan', 'Austria', 'Switzerland', 'New Zealand', 'Singapore', 'Colombia', 'Peru', 'Netherland', 'South Korea', 'Tonga', 'Ireland', 'Mongolia'];
+          var geoDataRequestOptions = {
+            entityType: 'CountryRegion',
+            getAllPolygons: true,
+          };
+          //Use the GeoData API manager to get the boundary 
+          Microsoft.Maps.SpatialDataService.GeoDataAPIManager.getBoundary(countries2, geoDataRequestOptions, map, function(data) {
+            if (data.results && data.results.length > 0) {
+              layer1.add((data.results[0].Polygons));
+            }
+          });
+
+          //Create an array of locations to get the boundaries of 
+          var states1 = ['Victoria, Australia', 'Western Australia', 'Northern Territory', 'Queensland', 'New South Wales', 'Doha', 'Dubai', 'California', 'nevada', 'utah', 'arizona', 'colorado', 'dc', 'maryland', 'new york', 'British Columbia', 'Beijing', 'Montana', 'England', 'Scotland', 'Northern Ireland'];
+          var geoDataRequestOptions = {
+            entityType: 'AdminDivision1',
+            getAllPolygons: true,
+          };
+          //Use the GeoData API manager to get the State
+          Microsoft.Maps.SpatialDataService.GeoDataAPIManager.getBoundary(states1, geoDataRequestOptions, map, function(data) {
+            if (data.results && data.results.length > 0) {
+              layer1.add((data.results[0].Polygons));
+            }
+          });
+        });
+
+
+
+        //Add layer to map. 
+        map.layers.insert(layer1);
+        //Add a viewchangeend event to the map so that it updates the visibility of the layers. 
+        Microsoft.Maps.Events.addHandler(map, 'viewchangeend', updateLayerVisibility);
+        //Do an initial update of the visibility. 
+        updateLayerVisibility();
+
+        function updateLayerVisibility() {
+          //Get the current zoom level of the map. 
+          var zoom = map.getZoom();
+          var layer;
+          //Loop through the layers in the map and check to see if it has zoomRange metadata. 
+          for (var i = 0; i < map.layers.length; i++) {
+            layer = map.layers[i];
+            if (layer.metadata && layer.metadata.zoomRange) {
+              if (zoom >= layer.metadata.zoomRange.min && zoom <= layer.metadata.zoomRange.max) {
+                layer.setVisible(true);
+              } else {
+                layer.setVisible(false);
+              }
+            }
+          }
+        }
+
+
+
+
+      }
+
     </script>
     <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=AgmExgPK-Ij7H84tUYfRTcxyqIJFfeBncXCU9VKbXTtLZOinxBX-7eVvNqFU8JZC' async defer></script>
-    
 
-    
-    
-</head>
-<body>
-    <div id="myMap" style="width:auto;height:auto;"></div> 
-</body>
+
+
+  </body>
+
 </html>
