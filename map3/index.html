@@ -1,135 +1,195 @@
 <!DOCTYPE html>
 <html>
-<title>W3.CSS Template</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<style>
-body {font-family: "Times New Roman", Georgia, Serif;}
-h1, h2, h3, h4, h5, h6 {
-  font-family: "Playfair Display";
-  letter-spacing: 5px;
-}
-</style>
 
-<script type='text/javascript'>
-    var map;   
-    
-        function GetMap() {
-           var map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
-            credentials: 'Aoqwq4MnPOtVqxAFpjmjLSCMwmgpxjcgNVJa9y50KRNOxCNVXXg30Eopyg9i5jrc', 
-            center: new Microsoft.Maps.Location(4.318729, 148.452588),
-            zoom: 3        
-        });
-        
-            
-            //Create a layer 
-            var layer1 = new Microsoft.Maps.Layer(); 
-            //Add zoom information as metadata of the layer. 
-             layer1.metadata = { 
-             zoomRange: { min: 3, max: 3 } 
-             }; 
-            var pushpin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(36.681399, 127.270947), { icon: 'https://www.gitcdn.xyz/repo/Nick-Shannon/9f47c0a311373fe90dbf5034f67bd3ad/raw/1635a8f2c0cbe61699e88e58b7c7a2a9f853c97d/travel.svg', anchor: new Microsoft.Maps.Point(0, 0) });
-            //Add pushpins 
-            layer1.add((pushpin)); 
-            //Add layer to map. 
-            map.layers.insert(layer1); 
-            //Add a viewchangeend event to the map so that it updates the visibility of the layers. 
-            Microsoft.Maps.Events.addHandler(map, 'viewchangeend', updateLayerVisibility); 
-            //Do an initial update of the visibility. 
-            updateLayerVisibility(); 
-            function updateLayerVisibility() { 
-            //Get the current zoom level of the map. 
-            var zoom = map.getZoom(); 
-            var layer; 
-        //Loop through the layers in the map and check to see if it has zoomRange metadata. 
-        for(var i=0;i<map.layers.length;i++){ 
-        layer = map.layers[i]; 
-        if(layer.metadata && layer.metadata.zoomRange){ 
-        if (zoom >= layer.metadata.zoomRange.min && zoom <= layer.metadata.zoomRange.max) { 
-        layer.setVisible(true); 
-        } else { 
-        layer.setVisible(false); 
-        } 
-        } 
-        } 
-}
-     
-            //Load the Spatial Data Services module.
-            Microsoft.Maps.loadModule('Microsoft.Maps.SpatialDataService', function () {
-            //Create an array of state boundaries to retrieve.
-       
-            var countries1 = ['Russia', 'France', 'Italy'];
-            var geoDataRequestOptions = {
-                entityType: 'CountryRegion',
-                getAllPolygons: false,  
-            };
-            //Use the GeoData API manager to get the State
-            Microsoft.Maps.SpatialDataService.GeoDataAPIManager.getBoundary(countries1, geoDataRequestOptions, map, function (data) {
-                if (data.results && data.results.length > 0) {
-                map.entities.push(data.results[0].Polygons);
-                }
-            });	
-       	 
-        
-      
-            //Create an array of locations to get the boundaries of 
-            var countries2 = ['Japan','Austria','Switzerland','New Zealand', 'Singapore','Colombia', 'Peru', 'Netherland','South Korea','Tonga','Ireland','Mongolia']; 
-            var geoDataRequestOptions = { 
-                entityType: 'CountryRegion',
-                getAllPolygons: true,
-            };  
-            //Use the GeoData API manager to get the boundary 
-            Microsoft.Maps.SpatialDataService.GeoDataAPIManager.getBoundary(countries2, geoDataRequestOptions, map, function (data) { 
-                if (data.results && data.results.length > 0) { 
-                map.entities.push(data.results[0].Polygons); 
-                } 
-            });	
+  <head>
+    <title>adddefaultpushpinHTML</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+     <style type='text/css'>body{margin:0;padding:0;overflow:hidden;font-family:'Segoe UI',Helvetica,Arial,Sans-Serif}</style>
   
-            //Create an array of locations to get the boundaries of 
-            var states1 = ['Victoria, Australia', 'Western Australia', 'Northern Territory', 'Queensland', 'New South Wales', 'Doha', 'Dubai', 'California', 'nevada', 'utah', 'arizona', 'colorado', 'dc', 'maryland', 'new york', 'British Columbia', 'Beijing', 'Montana', 'England', 'Scotland', 'Northern Ireland'];
-            var geoDataRequestOptions = {
-                entityType: 'AdminDivision1',
-                getAllPolygons: true,
-            };
-            //Use the GeoData API manager to get the State
-            Microsoft.Maps.SpatialDataService.GeoDataAPIManager.getBoundary(states1, geoDataRequestOptions, map, function (data) {
-                if (data.results && data.results.length > 0) {
-                map.entities.push(data.results[0].Polygons);
+	
+	
+	
+	</head>
+
+  <body>
+    <div id='printoutPanel'></div>
+    <div id='myMap' style='width: 100vw; height: 100vh;'></div>
+
+     <!-- Navbar (sit on top) -->
+    <div class="w3-top">
+      <div class="w3-bar w3-white w3-padding w3-card" style="letter-spacing:4px;">
+        <a href="#home" class="w3-bar-item w3-button">Travel Map</a>
+        <!-- Right-sided navbar links. Hide them on small screens -->
+        <div class="w3-right w3-hide-small">
+          <a href="#about" class="w3-bar-item w3-button">About</a>
+          <a href="#menu" class="w3-bar-item w3-button">Menu</a>
+          <a href="#contact" class="w3-bar-item w3-button">Contact</a>
+        </div>
+      </div> 
+
+
+
+
+      <script type='text/javascript'>
+        var map;
+
+        function GetMap() {
+          var map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
+            credentials: 'Aoqwq4MnPOtVqxAFpjmjLSCMwmgpxjcgNVJa9y50KRNOxCNVXXg30Eopyg9i5jrc',
+            center: new Microsoft.Maps.Location(4.318729, 148.452588),
+            zoom: 2
+
+          });
+
+
+          //Create a layer 
+          var layer1 = new Microsoft.Maps.Layer();
+
+          //Add zoom information as metadata of the layer. 
+          layer1.metadata = {
+            zoomRange: {
+              min: 3,
+              max: 5
+            }
+          };
+
+          var countries1 = ['Russia', 'France', 'Italy', 'Canda'];
+          var geoDataRequestOptions = {
+            entityType: 'CountryRegion'
+          };
+          Microsoft.Maps.loadModule('Microsoft.Maps.SpatialDataService', function() {
+            //Use the GeoData API manager to get the boundary 
+            Microsoft.Maps.SpatialDataService.GeoDataAPIManager.getBoundary(countries1, geoDataRequestOptions, map, function(data) {
+              if (data.results && data.results.length > 0) {
+                layer1.add((data.results[0].Polygons));
+                for (var i = 0, len = data.results[0].Polygons.length; i < len; i++) {
+                  data.results[0].Polygons[i].setOptions({
+                    fillColor: 'rgba(0, 250, 154,0.1)',
+                    strokeColor: 'rgba(0, 0, 255,0.2)',
+                    strokeThickness: 0.8
+                  });
                 }
-            }); 
-        }); 
-       
-       
-    }
-    </script>
-    <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=AgmExgPK-Ij7H84tUYfRTcxyqIJFfeBncXCU9VKbXTtLZOinxBX-7eVvNqFU8JZC' async defer></script>
-    
+
+                var polyline = new Microsoft.Maps.Polyline([new Microsoft.Maps.Location(-31.930627, 115.744237),
+                  new Microsoft.Maps.Location(-31.930627, 115.744237),
+                  new Microsoft.Maps.Location(-31.724948, 115.515871),
+                  new Microsoft.Maps.Location(-31.531334, 115.307852),
+                  new Microsoft.Maps.Location(-31.349785, 115.120182),
+                  new Microsoft.Maps.Location(-31.180301, 114.952858),
+                  new Microsoft.Maps.Location(-31.022883, 114.805882),
+                  new Microsoft.Maps.Location(-30.877529, 114.679254),
+                  new Microsoft.Maps.Location(-30.74424, 114.572973),
+                  new Microsoft.Maps.Location(-30.615811, 114.478789),
+                  new Microsoft.Maps.Location(-30.485035, 114.388451),
+                  new Microsoft.Maps.Location(-30.351913, 114.301959),
+                  new Microsoft.Maps.Location(-30.216444, 114.219313),
+                  new Microsoft.Maps.Location(-30.07863, 114.140512),
+                  new Microsoft.Maps.Location(-29.938469, 114.065558),
+                  new Microsoft.Maps.Location(-31.022883, 114.805882),
+                  new Microsoft.Maps.Location(-30.877529, 114.679254),
+                  new Microsoft.Maps.Location(-30.74424, 114.572973),
+                  new Microsoft.Maps.Location(-30.615811, 114.478789),
+                  new Microsoft.Maps.Location(-30.485035, 114.388451),
+                  new Microsoft.Maps.Location(-30.351913, 114.301959),
+                  new Microsoft.Maps.Location(-30.216444, 114.219313),
+                  new Microsoft.Maps.Location(-30.07863, 114.140512),
+                  new Microsoft.Maps.Location(-29.938469, 114.065558),
+                  new Microsoft.Maps.Location(-29.795962, 113.994449),
+                  new Microsoft.Maps.Location(-29.651509, 113.927379),
+                  new Microsoft.Maps.Location(-29.505514, 113.864542),
+                  new Microsoft.Maps.Location(-29.357974, 113.805938),
+                  new Microsoft.Maps.Location(-29.208891, 113.751565),
+                  new Microsoft.Maps.Location(-29.058264, 113.701425),
+                  new Microsoft.Maps.Location(-28.906094, 113.655518),
+                  new Microsoft.Maps.Location(-28.75238, 113.613843),
+                  new Microsoft.Maps.Location(-28.597554, 113.576511),
+                  new Microsoft.Maps.Location(-28.442048, 113.543632),
+                  new Microsoft.Maps.Location(-28.285861, 113.515207),
+                  new Microsoft.Maps.Location(-28.128993, 113.491235),
+                  new Microsoft.Maps.Location(-27.971445, 113.471716),
+                  new Microsoft.Maps.Location(-27.813216, 113.456651),
+                  new Microsoft.Maps.Location(-27.654307, 113.44604),
+                  new Microsoft.Maps.Location(-27.483892, 113.441556),
+                  new Microsoft.Maps.Location(-27.291145, 113.444875),
+                  new Microsoft.Maps.Location(-27.076066, 113.455997),
+                  new Microsoft.Maps.Location(-26.838656, 113.474921),
+                  new Microsoft.Maps.Location(-26.578913, 113.501648),
+                  new Microsoft.Maps.Location(-26.296839, 113.536178),
+                  new Microsoft.Maps.Location(-25.992434, 113.57851)
+                ], null);
+
+                //Add 100 red pushpins 
+                layer1.add((polyline));
+
+
+                //Add layer to map. 
+                map.layers.insert(layer1);
+
+
+                //Create Layer 3 
+                var layer3 = new Microsoft.Maps.Layer();
+
+                //Add zoom information as metadata of the layer. 
+                layer3.metadata = {
+                  zoomRange: {
+                    min: 3,
+                    max: 10
+                  }
+                };
+
+
+                var pushpin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(36.681399, 127.270947), null);
+                layer3.add(pushpin);
+                Microsoft.Maps.Events.addHandler(pushpin, 'click', function(args) {
+                  map.setView({
+                    center: args.target.getLocation(),
+                    zoom: 14
+                  });
+                });
+                
+                //Add layer to map. 
+                map.layers.insert(layer3);
+
+
+                //Add a viewchangeend event to the map so that it updates the visibility of the layers. 
+                Microsoft.Maps.Events.addHandler(map, 'viewchangeend', updateLayerVisibility);
+
+                //Do an initial update of the visibility. 
+                updateLayerVisibility();
+
+
+                function updateLayerVisibility() {
+                  //Get the current zoom level of the map. 
+                  var zoom = map.getZoom();
+                  var layer;
+
+                  //Loop through the layers in the map and check to see if it has zoomRange metadata. 
+                  for (var i = 0; i < map.layers.length; i++) {
+                    layer = map.layers[i];
+
+                    if (layer.metadata && layer.metadata.zoomRange) {
+                      if (zoom >= layer.metadata.zoomRange.min && zoom <= layer.metadata.zoomRange.max) {
+                        layer.setVisible(true);
+                      } else {
+                        layer.setVisible(false);
+                      }
+                    }
+                  }
+                }
+              }
+            })
+          })
 
 
 
+        }
 
-
-<body>
-
-<!-- Navbar (sit on top) -->
-<div class="w3-top">
-  <div class="w3-bar w3-white w3-padding w3-card" style="letter-spacing:4px;">
-    <a href="#home" class="w3-bar-item w3-button">Gourmet au Catering</a>
-    <!-- Right-sided navbar links. Hide them on small screens -->
-    <div class="w3-right w3-hide-small">
-      <a href="#about" class="w3-bar-item w3-button">About</a>
-      <a href="#menu" class="w3-bar-item w3-button">Menu</a>
-      <a href="#contact" class="w3-bar-item w3-button">Contact</a>
-    </div>
-  </div>
-</div>
+      </script>
+      <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=AgmExgPK-Ij7H84tUYfRTcxyqIJFfeBncXCU9VKbXTtLZOinxBX-7eVvNqFU8JZC' async defer></script>
 
 
 
-<!-- Page content -->
-<div id="myMap" style="width:auto;height:auto;"></div> 
+  </body>
 
-
-</body>
 </html>
