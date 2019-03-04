@@ -2,7 +2,7 @@
 <html>
 
   <head>
-    <title>Map2.1</title>
+    <title>Map2.2</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style type='text/css'>
       body {
@@ -30,10 +30,7 @@
           credentials: 'Aoqwq4MnPOtVqxAFpjmjLSCMwmgpxjcgNVJa9y50KRNOxCNVXXg30Eopyg9i5jrc',
           center: new Microsoft.Maps.Location(4.318729, 148.452588),
           zoom: 3
-
         });
-
-
         ///////////////////////////////////////////////////////
         //Title
         var layer2 = new Microsoft.Maps.Layer();
@@ -52,12 +49,9 @@
         layer2.add((pushpin));
         //Add layer to map. 
         map.layers.insert(layer2);
-
-
         //////////////////////////////////////////////////////
         //Pushin Zooms 1
         var layer3 = new Microsoft.Maps.Layer();
-
         //Add zoom information as metadata of the layer. 
         layer3.metadata = {
           zoomRange: {
@@ -65,13 +59,10 @@
             max: 7
           }
         };
-
-
         var pushpin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(43.506484, 142.576775), {
           icon: 'https://www.gitcdn.xyz/repo/Nick-Shannon/4235c3f97352e8c5c4b03f56ad3d60bf/raw/33636033778fc1434a18c36cb9f6ce87507a17ac/point.svg',
           anchor: new Microsoft.Maps.Point(12, 28)
         });
-
         layer3.add(pushpin);
         Microsoft.Maps.Events.addHandler(pushpin, 'click', function(args) {
           map.setView({
@@ -79,15 +70,13 @@
             zoom: 8
           });
         });
-
         //Add layer to map. 
         map.layers.insert(layer3);
 
 
-//////////////////////////////////////////////////////
-        //Pushin Zooms 2
+        //////////////////////////////////////////////////////
+        //Pushin Zooms 2 Layer3
         var layer3 = new Microsoft.Maps.Layer();
-
         //Add zoom information as metadata of the layer. 
         layer3.metadata = {
           zoomRange: {
@@ -95,13 +84,10 @@
             max: 7
           }
         };
-
-
         var pushpin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(36.457226, 138.906677), {
           icon: 'https://www.gitcdn.xyz/repo/Nick-Shannon/4235c3f97352e8c5c4b03f56ad3d60bf/raw/33636033778fc1434a18c36cb9f6ce87507a17ac/point.svg',
           anchor: new Microsoft.Maps.Point(12, 28)
         });
-
         layer3.add(pushpin);
         Microsoft.Maps.Events.addHandler(pushpin, 'click', function(args) {
           map.setView({
@@ -109,17 +95,83 @@
             zoom: 8
           });
         });
-
         //Add layer to map. 
         map.layers.insert(layer3);
+
+
+        ////////////////////////////////////////////////
+        //Holiday points 1
+
+        var holiday1 = new Microsoft.Maps.Layer();
+        //Add zoom information as metadata of the layer. 
+        holiday1.metadata = {
+          zoomRange: {
+            min: 4,
+            max: 7
+          }
+        };
+
+        //pin1 
+        var pin1 = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(43.809913, -79.386212), null);
+        var infobox1 = new Microsoft.Maps.Infobox(new Microsoft.Maps.Location(43.809913, -79.386212), {
+          maxHeight: 300,
+          maxWidth: 420,
+          title: 'Map Center',
+          description: 'Seattle <br> <br>' + '<img src="https://project.mainroads.wa.gov.au/roe8/PublishingImages/News%20and%20Information/Benefits.png" alt="Mountain View">',
+          visible: false
+        });
+        infobox1.setMap(map);
+        Microsoft.Maps.Events.addHandler(pin1, 'click', function() {
+          infobox1.setOptions({
+            visible: true
+          });
+        });
+        holiday1.add(pin1);
+
+        //Add layer to map. 
+        map.layers.insert(holiday1);
+
+
+
+        ////////////////////////////////////////////////
+        //Holiday points 1
+
+        var holiday2 = new Microsoft.Maps.Layer();
+        //Add zoom information as metadata of the layer. 
+        holiday2.metadata = {
+          zoomRange: {
+            min: 4,
+            max: 7
+          }
+        };
+
+
+        //pin2 
+        var pin2 = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(43.659585, -79.337501), null);
+        var infobox = new Microsoft.Maps.Infobox(new Microsoft.Maps.Location(43.659585, -79.337501), {
+          maxHeight: 300,
+          maxWidth: 420,
+          title: 'Map Center',
+          description: 'Japan <br> <br>' + '<img src="https://project.mainroads.wa.gov.au/roe8/PublishingImages/News%20and%20Information/Benefits.png" alt="Mountain View">',
+          visible: false
+        });
+        infobox.setMap(map);
+        Microsoft.Maps.Events.addHandler(pin2, 'click', function() {
+          infobox.setOptions({
+            visible: true
+          });
+        });
+        holiday1.add(pin2);
+
+        //Add layer to map. 
+        map.layers.insert(holiday2);
+
 
 
 
 
         /////////////////////////////////////////////////////////
         ////////Countries 
-
-
         var layer1 = new Microsoft.Maps.Layer();
         //Add zoom information as metadata of the layer. 
         layer1.metadata = {
@@ -128,12 +180,9 @@
             max: 3
           }
         };
-
-
         //Load the Spatial Data Services module.
         Microsoft.Maps.loadModule('Microsoft.Maps.SpatialDataService', function() {
           //Create an array of state boundaries to retrieve.
-
           var countries1 = ['Russia', 'France', 'Italy'];
           var geoDataRequestOptions = {
             entityType: 'CountryRegion',
@@ -145,11 +194,6 @@
               layer1.add((data.results[0].Polygons));
             }
           });
-
-
-
-
-
           //Create an array of locations to get the boundaries of 
           var countries2 = ['Japan', 'Austria', 'Switzerland', 'New Zealand', 'Singapore', 'Colombia', 'Peru', 'Netherland', 'South Korea', 'Tonga', 'Ireland', 'Mongolia'];
           var geoDataRequestOptions = {
@@ -162,7 +206,6 @@
               layer1.add((data.results[0].Polygons));
             }
           });
-
           //Create an array of locations to get the boundaries of 
           var states1 = ['Victoria, Australia', 'Western Australia', 'Northern Territory', 'Queensland', 'New South Wales', 'Doha', 'Dubai', 'California', 'nevada', 'utah', 'arizona', 'colorado', 'dc', 'maryland', 'new york', 'British Columbia', 'Beijing', 'Montana', 'England', 'Scotland', 'Northern Ireland'];
           var geoDataRequestOptions = {
@@ -176,9 +219,6 @@
             }
           });
         });
-
-
-
         //Add layer to map. 
         map.layers.insert(layer1);
         //Add a viewchangeend event to the map so that it updates the visibility of the layers. 
@@ -202,10 +242,6 @@
             }
           }
         }
-
-
-
-
       }
 
     </script>
