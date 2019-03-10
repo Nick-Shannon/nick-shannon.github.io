@@ -1,0 +1,33 @@
+{
+  "mapOptions": {
+    "center": "47.606209,-122.332071",
+    "zoom": 4
+  },
+  "modules": [
+    {
+      "moduleName": "Microsoft.Maps.Isochrone"
+    },
+    
+    {
+      "moduleName": "Microsoft.Maps.GeoXml",
+      "moduleOptions": [
+        {
+          "addLayerFromUrl": "https://bingmapsisdk.blob.core.windows.net/isdksamples/Countries.xml",
+          "geoXmlOption": {
+            "layerName": "foo",
+            "_comment": "other options are autoUpdateMapView, infoboxOptions, suppressInfoboxes, visible"
+          }
+        },
+        {
+          "addLayerFromUrl": "https://bingmapsv8samples.azurewebsites.net/Common/data/kml/SampleKml.kml"
+        },
+        {
+          "addLayerFromUrl": "https://earthquake.usgs.gov/fdsnws/event/1/query?minmagnitude=3&format=geojson",
+          "geoXmlOption": {
+            "layerName": "geoxml layer loading geojson data"
+          }
+        }
+      ]
+    }
+  ]
+}
