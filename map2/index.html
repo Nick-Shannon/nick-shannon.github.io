@@ -2,7 +2,7 @@
 <html>
 
   <head>
-    <title>Map2.G1</title>
+    <title>Map2.G2</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://www.bing.com/sa/simg/bing_p_rr_teal_min.ico" rel="shortcut icon">
        <style type='text/css'>
@@ -100,72 +100,90 @@
         map.layers.insert(layer3);
 
 
+ 
         ////////////////////////////////////////////////
         //Holiday points 1
-
         var holiday1 = new Microsoft.Maps.Layer();
-        //Add zoom information as metadata of the layer. 
+        //Add zoom information as metadata of the layer.
         holiday1.metadata = {
-          zoomRange: {
-            min: 4,
-            max: 7
-          }
+            zoomRange: {
+                min: 4,
+                max: 12
+            }
         };
 
-        //pin1 
-        var pin1 = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(43.809913, -79.386212), null);
-        var infobox1 = new Microsoft.Maps.Infobox(new Microsoft.Maps.Location(43.809913, -79.386212), {
-          maxHeight: 300,
-          maxWidth: 420,
-          title: 'Map Center',
-          description: 'Seattle <br> <br>' + '<img src="https://project.mainroads.wa.gov.au/roe8/PublishingImages/News%20and%20Information/Benefits.png" alt="Mountain View">',
-          visible: false
+        //pin1
+        var pin1 = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(43.649720, -79.481480), null);
+        infobox[0] = new Microsoft.Maps.Infobox(new Microsoft.Maps.Location(43.649720, -79.481480), {
+            maxHeight: 300,
+            maxWidth: 420,
+            title: 'Colombia',
+            description: 'Cocora valley <br> <br>' + '<img src="https://pbs.twimg.com/media/Dwt9_cwXgAAnC8V.jpg" height="210" alt="Mountain View">',
+            visible: false,
+            autoAlignment: true
         });
-        infobox1.setMap(map);
+        //************************************************
+        //infobox[0]
+        //************************************************
+        infobox[0].setMap(map);
         Microsoft.Maps.Events.addHandler(pin1, 'click', function() {
-          infobox1.setOptions({
-            visible: true
-          });
+            _infoboxClose(infobox,0); //** _infoboxClose(array, arrayIndex); **
         });
         holiday1.add(pin1);
-
-        //Add layer to map. 
+        //Add layer to map.
         map.layers.insert(holiday1);
-
-
 
         ////////////////////////////////////////////////
         //Holiday points 1
-
         var holiday2 = new Microsoft.Maps.Layer();
-        //Add zoom information as metadata of the layer. 
+        //Add zoom information as metadata of the layer.
         holiday2.metadata = {
-          zoomRange: {
-            min: 4,
-            max: 7
-          }
+            zoomRange: {
+                min: 4,
+                max: 12
+            }
         };
 
 
-        //pin2 
+        //pin2
         var pin2 = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(43.659585, -79.337501), null);
-        var infobox = new Microsoft.Maps.Infobox(new Microsoft.Maps.Location(43.659585, -79.337501), {
-          maxHeight: 300,
-          maxWidth: 420,
-          title: 'Map Center',
-          description: 'Japan <br> <br>' + '<img src="https://project.mainroads.wa.gov.au/roe8/PublishingImages/News%20and%20Information/Benefits.png" alt="Mountain View">',
-          visible: false
+        infobox[1] = new Microsoft.Maps.Infobox(new Microsoft.Maps.Location(43.659585, -79.337501), {
+            maxHeight: 300,
+            maxWidth: 420,
+            title: 'Montana',
+            description: 'Big Sky <br> <br>' + '<img src="https://pbs.twimg.com/media/DxsemS_X0AADxyX.jpg"  height="200" alt="Mountain View">',
+            visible: false,
+            autoAlignment: true
         });
-        infobox.setMap(map);
+        //************************************************
+        //infobox[1]
+        //************************************************
+        infobox[1].setMap(map);
         Microsoft.Maps.Events.addHandler(pin2, 'click', function() {
-          infobox.setOptions({
-            visible: true
-          });
+            _infoboxClose(infobox,1); //** _infoboxClose(array, arrayIndex); **
         });
-        holiday1.add(pin2);
-
-        //Add layer to map. 
+        holiday2.add(pin2);
+        //Add layer to map.
         map.layers.insert(holiday2);
+        //////////////////////////////////////////////////
+
+        //************************************************
+        // infobox [ Show / Hide ]
+        // _infoboxClose(array, arrayIndex);
+        //************************************************
+        function _infoboxClose(target,index){
+            for(var i=0;i<target.length;i++){
+                target[i].setOptions({
+                    visible: false
+                });
+            }
+            target[index].setOptions({
+                visible: true
+            });
+        }
+
+        
+        
 
 
 
