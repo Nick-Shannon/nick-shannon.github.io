@@ -184,6 +184,54 @@
             });
         }
         
+         ////////////////////////////////////////////////
+/////////GeoJson 
+
+        var layerP = new Microsoft.Maps.Layer();
+        //Add zoom information as metadata of the layer. 
+        layerP.metadata = {
+          zoomRange: {
+            min: 4,
+            max: 20
+          }
+        };
+
+
+        var infobox = new Microsoft.Maps.Infobox();
+        infobox.setOptions({
+          visible: false,
+          maxHeight: 400,
+          maxWidth: 400
+        });
+        infobox.setMap(map);
+
+        Microsoft.Maps.loadModule('Microsoft.Maps.GeoJson', function() {
+          Microsoft.Maps.GeoJson.readFromUrl('https://opendata.arcgis.com/datasets/80db27fdc30344feb38f336193482719_0.geojson', function(shapes) {
+            layerP.add((shapes));
+            Microsoft.Maps.Events.addHandler(layerP, 'click', function(args) {
+              var img = new Image();
+              // load the image first in order to show the infobox 'correctly' 
+              img.onload = function() {
+                var html = '<div>' + args.target.metadata.direction + '<br/><br/>' + args.target.metadata.description + '<br/><br/>' + '</div>';
+                html += '<img src=" ' + this.src + '" width="300" />';
+                infobox.setOptions({
+                  location: args.target.getLocation(),
+                  title: args.target.metadata.name,
+                  description: html,
+                  visible: true
+                });
+              }
+
+              img.src = args.target.metadata.imageUrl;
+            });
+          });
+        });
+
+
+
+        map.layers.insert(layerP);
+
+        ///////////////////////
         
   
         
