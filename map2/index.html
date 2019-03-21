@@ -2,7 +2,7 @@
 <html>
 
   <head>
-    <title>Map2.G1</title>
+    <title>Map2.G2</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://www.bing.com/sa/simg/bing_p_rr_teal_min.ico" rel="shortcut icon">
        <style type='text/css'>
@@ -25,6 +25,7 @@
 
     <script type='text/javascript'>
       var map;
+      var infobo = []; //** Add **
 
       function GetMap() {
         var map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
@@ -32,11 +33,13 @@
           center: new Microsoft.Maps.Location(4.318729, 148.452588),
           zoom: 3
         });
-        ///////////////////////////////////////////////////////
+        
+////////////////////////////TITLE////////////////////////////////////////////
+        
         //Title
-        var layer2 = new Microsoft.Maps.Layer();
+        var title = new Microsoft.Maps.Layer();
         //Add zoom information as metadata of the layer. 
-        layer2.metadata = {
+        title.metadata = {
           zoomRange: {
             min: 3,
             max: 3
@@ -47,14 +50,105 @@
           anchor: new Microsoft.Maps.Point(0, 0)
         });
         //Add pushpins 
-        layer2.add((pushpin));
+        title.add((pushpin));
         //Add layer to map. 
-        map.layers.insert(layer2);
-        //////////////////////////////////////////////////////
+        map.layers.insert(title);
+
+    
+ /////////////////////////////////////////////////HOLIDAY POINTS////////////////////////////////////////       
+        
+        
+        //Holiday points 1
+        var holiday1 = new Microsoft.Maps.Layer();
+        //Add zoom information as metadata of the layer.
+        holiday1.metadata = {
+            zoomRange: {
+                min: 4,
+                max: 12
+            }
+        };
+
+        //pin1
+        var pin1 = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(43.649720, -79.481480), null);
+        infobo[0] = new Microsoft.Maps.Infobox(new Microsoft.Maps.Location(43.649720, -79.481480), {
+            maxHeight: 300,
+            maxWidth: 420,
+            title: 'Colombia',
+            description: 'Cocora valley <br> <br>' + '<img src="https://pbs.twimg.com/media/Dwt9_cwXgAAnC8V.jpg" height="210" alt="Mountain View">',
+            visible: false,
+            autoAlignment: true
+        });
+        //************************************************
+        //infobo[0]
+        //************************************************
+        infobo[0].setMap(map);
+        Microsoft.Maps.Events.addHandler(pin1, 'click', function() {
+            _infoboClose(infobo,0); //** _infoboClose(array, arrayIndex); **
+        });
+        holiday1.add(pin1);
+        //Add layer to map.
+        map.layers.insert(holiday1);
+
+        ////////////////////////////////////////////////
+        //Holiday points 2
+        var holiday2 = new Microsoft.Maps.Layer();
+        //Add zoom information as metadata of the layer.
+        holiday2.metadata = {
+            zoomRange: {
+                min: 4,
+                max: 12
+            }
+        };
+
+
+        //pin2
+        var pin2 = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(43.659585, -79.337501), null);
+        infobo[1] = new Microsoft.Maps.Infobox(new Microsoft.Maps.Location(43.659585, -79.337501), {
+            maxHeight: 300,
+            maxWidth: 420,
+            title: 'Montana',
+            description: 'Big Sky <br> <br>' + '<img src="https://pbs.twimg.com/media/DxsemS_X0AADxyX.jpg"  height="200" alt="Mountain View">',
+            visible: false,
+            autoAlignment: true
+        });
+        //************************************************
+        //infobo[1]
+        //************************************************
+        infobo[1].setMap(map);
+        Microsoft.Maps.Events.addHandler(pin2, 'click', function() {
+            _infoboClose(infobo,1); //** _infoboClose(array, arrayIndex); **
+        });
+        holiday2.add(pin2);
+        //Add layer to map.
+        map.layers.insert(holiday2);
+        //////////////////////////////////////////////////
+
+        //************************************************
+        // infobo [ Show / Hide ]
+        // _infoboClose(array, arrayIndex);
+        //************************************************
+        function _infoboClose(target,index){
+            for(var i=0;i<target.length;i++){
+                target[i].setOptions({
+                    visible: false
+                });
+            }
+            target[index].setOptions({
+                visible: true
+            });
+        }
+        
+        
+          
+           
+ ////////////////zoom points////////////////////////////////////////////////////////////////////////////////////    
+        
+        
+        
         //Pushin Zooms 1
-        var layer3 = new Microsoft.Maps.Layer();
+        var zoom1 = new Microsoft.Maps.Layer();
         //Add zoom information as metadata of the layer. 
-        layer3.metadata = {
+        zoom1.metadata = {
           zoomRange: {
             min: 3,
             max: 7
@@ -64,7 +158,7 @@
           icon: 'https://www.gitcdn.xyz/repo/Nick-Shannon/4235c3f97352e8c5c4b03f56ad3d60bf/raw/33636033778fc1434a18c36cb9f6ce87507a17ac/point.svg',
           anchor: new Microsoft.Maps.Point(12, 28)
         });
-        layer3.add(pushpin);
+        zoom1.add(pushpin);
         Microsoft.Maps.Events.addHandler(pushpin, 'click', function(args) {
           map.setView({
             center: args.target.getLocation(),
@@ -72,14 +166,14 @@
           });
         });
         //Add layer to map. 
-        map.layers.insert(layer3);
+        map.layers.insert(zoom1);
 
 
-        //////////////////////////////////////////////////////
+        //////////////////////////
         //Pushin Zooms 2 Layer3
-        var layer3 = new Microsoft.Maps.Layer();
+        var zoom2 = new Microsoft.Maps.Layer();
         //Add zoom information as metadata of the layer. 
-        layer3.metadata = {
+        zoom2.metadata = {
           zoomRange: {
             min: 3,
             max: 7
@@ -89,7 +183,7 @@
           icon: 'https://www.gitcdn.xyz/repo/Nick-Shannon/4235c3f97352e8c5c4b03f56ad3d60bf/raw/33636033778fc1434a18c36cb9f6ce87507a17ac/point.svg',
           anchor: new Microsoft.Maps.Point(12, 28)
         });
-        layer3.add(pushpin);
+        zoom2.add(pushpin);
         Microsoft.Maps.Events.addHandler(pushpin, 'click', function(args) {
           map.setView({
             center: args.target.getLocation(),
@@ -97,80 +191,11 @@
           });
         });
         //Add layer to map. 
-        map.layers.insert(layer3);
+        map.layers.insert(zoom2);
 
 
-        ////////////////////////////////////////////////
-        //Holiday points 1
-
-        var holiday1 = new Microsoft.Maps.Layer();
-        //Add zoom information as metadata of the layer. 
-        holiday1.metadata = {
-          zoomRange: {
-            min: 4,
-            max: 7
-          }
-        };
-
-        //pin1 
-        var pin1 = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(43.809913, -79.386212), null);
-        var infobox1 = new Microsoft.Maps.Infobox(new Microsoft.Maps.Location(43.809913, -79.386212), {
-          maxHeight: 300,
-          maxWidth: 420,
-          title: 'Map Center',
-          description: 'Seattle <br> <br>' + '<img src="https://project.mainroads.wa.gov.au/roe8/PublishingImages/News%20and%20Information/Benefits.png" alt="Mountain View">',
-          visible: false
-        });
-        infobox1.setMap(map);
-        Microsoft.Maps.Events.addHandler(pin1, 'click', function() {
-          infobox1.setOptions({
-            visible: true
-          });
-        });
-        holiday1.add(pin1);
-
-        //Add layer to map. 
-        map.layers.insert(holiday1);
-
-
-
-        ////////////////////////////////////////////////
-        //Holiday points 1
-
-        var holiday2 = new Microsoft.Maps.Layer();
-        //Add zoom information as metadata of the layer. 
-        holiday2.metadata = {
-          zoomRange: {
-            min: 4,
-            max: 7
-          }
-        };
-
-
-        //pin2 
-        var pin2 = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(43.659585, -79.337501), null);
-        var infobox = new Microsoft.Maps.Infobox(new Microsoft.Maps.Location(43.659585, -79.337501), {
-          maxHeight: 300,
-          maxWidth: 420,
-          title: 'Map Center',
-          description: 'Japan <br> <br>' + '<img src="https://project.mainroads.wa.gov.au/roe8/PublishingImages/News%20and%20Information/Benefits.png" alt="Mountain View">',
-          visible: false
-        });
-        infobox.setMap(map);
-        Microsoft.Maps.Events.addHandler(pin2, 'click', function() {
-          infobox.setOptions({
-            visible: true
-          });
-        });
-        holiday1.add(pin2);
-
-        //Add layer to map. 
-        map.layers.insert(holiday2);
-
-
-
-        ////////////////////////////////////////////////
-/////////GeoJson 
+       
+///////////////////GeoJson////////////////////////////////////////////////////////////////////////////////////////////////
 
         var layerP = new Microsoft.Maps.Layer();
         //Add zoom information as metadata of the layer. 
@@ -216,14 +241,12 @@
 
         map.layers.insert(layerP);
 
-        ///////////////////////
+        
+        
 
+////////////////Countries///////////////////////////////////////////////////////////////////////////////////////
 
-
-
-
-        /////////////////////////////////////////////////////////
-        ////////Countries 
+       
         var layer1 = new Microsoft.Maps.Layer();
         //Add zoom information as metadata of the layer. 
         layer1.metadata = {
@@ -271,8 +294,14 @@
             }
           });
         });
+                        
         //Add layer to map. 
         map.layers.insert(layer1);
+        
+        
+  //////////////////////////////////Zoom range stuff////////////////////////////////////////////      
+        
+        
         //Add a viewchangeend event to the map so that it updates the visibility of the layers. 
         Microsoft.Maps.Events.addHandler(map, 'viewchangeend', updateLayerVisibility);
         //Do an initial update of the visibility. 
