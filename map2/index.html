@@ -86,21 +86,10 @@
             _infoboClose(infobo,0); //** _infoboClose(array, arrayIndex); **
         });
         holiday1.add(pin1);
-        //Add layer to map.
-        map.layers.insert(holiday1);
+   
 
         ////////////////////////////////////////////////
-        //Holiday points 2
-        var holiday2 = new Microsoft.Maps.Layer();
-        //Add zoom information as metadata of the layer.
-        holiday2.metadata = {
-            zoomRange: {
-                min: 4,
-                max: 12
-            }
-        };
-
-
+       
         //pin2
         var pin2 = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(43.659585, -79.337501), null);
         infobo[1] = new Microsoft.Maps.Infobox(new Microsoft.Maps.Location(43.659585, -79.337501), {
@@ -118,10 +107,17 @@
         Microsoft.Maps.Events.addHandler(pin2, 'click', function() {
             _infoboClose(infobo,1); //** _infoboClose(array, arrayIndex); **
         });
-        holiday2.add(pin2);
-        //Add layer to map.
-        map.layers.insert(holiday2);
-        //////////////////////////////////////////////////
+        holiday1.add(pin2);
+        
+        
+        //////////////
+        
+        
+        //Add all holiday pins to the map
+        map.layers.insert(holiday1);
+        
+        
+  ////////////////Code to Close Infobox (required once)//////////////////////////////////////////////////
 
         //************************************************
         // infobo [ Show / Hide ]
@@ -300,7 +296,7 @@
         map.layers.insert(layer1);
         
         
-  //////////////////////////////////Zoom range code////////////////////////////////////////////      
+  //////////////////////////////////Zoom range code (required once)////////////////////////////////////////////      
         
         
         //Add a viewchangeend event to the map so that it updates the visibility of the layers. 
