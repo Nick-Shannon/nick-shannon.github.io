@@ -2,7 +2,7 @@
 <html>
 
   <head>
-    <title>Map2.G4</title>
+    <title>Map2.G5</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://www.bing.com/sa/simg/bing_p_rr_teal_min.ico" rel="shortcut icon">
        <style type='text/css'>
@@ -92,11 +92,11 @@
 
         ////////////////////////////////////////////////
        
-        //pin2
+        //pin2 - use this as a template to create new holiday pins
         var pin2 = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(43.659585, -79.337501), null);
         infobo[1] = new Microsoft.Maps.Infobox(new Microsoft.Maps.Location(43.659585, -79.337501), {
-            maxHeight: 300,
-            maxWidth: 420,
+            maxHeight: 600,
+            maxWidth: 300,
             title: 'Montana',
             description: 'Big Sky <br> <br>' + '<img src="https://pbs.twimg.com/media/DxsemS_X0AADxyX.jpg"  height="200" alt="Mountain View">',
             visible: false,
@@ -113,6 +113,36 @@
         
         
         //////////////
+        
+             //pin3
+        var pin3 = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(35.658611, 139.745556), null);
+        infobo[1] = new Microsoft.Maps.Infobox(new Microsoft.Maps.Location(35.658611, 139.745556), {
+            maxHeight: 600,
+            maxWidth: 300,
+            title: 'Tokyo Tower 2011',
+            description: 'View of Tokyo Skyline <br> <br>' + '<a href="https://nickspxts.files.wordpress.com/2019/03/jpsg_skyline-tokyo-tower-thumba_2011-12-28_17-33-55_tokyo_dec11.jpg" target="_blank"><img src="https://nickspxts.files.wordpress.com/2019/03/jpsg_300_skyline-tokyo-tower-thumba_2011-12-28_17-33-55_tokyo_dec11.jpg" alt="Tokyo Tower View" /></a>
+',
+            visible: false,
+            autoAlignment: true
+        });
+        //************************************************
+        //infobo[2]
+        //************************************************
+        infobo[2].setMap(map);
+        Microsoft.Maps.Events.addHandler(pin3, 'click', function() {
+            _infoboClose(infobo,1); //** _infoboClose(array, arrayIndex); **
+        });
+        holiday1.add(pin3);
+        
+        
+        
+        //////////////
+        
+        
+        ////////////////
+        
+        ///////////
+        
         
         
         //Add all holiday pins to the map
