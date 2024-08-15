@@ -47,6 +47,11 @@
         'source': 'imagery',
         'paint': {}
       });
+
+      // Error handling
+      map.on('error', function(e) {
+        console.error('Error loading layer:', e.error);
+      });
     });
   </script>
 </body>
