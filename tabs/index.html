@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Leaflet Map with ArcGIS REST Service</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-  <script src="https://unpkg.com/esri-leaflet@3.0.12/dist/esri-leaflet.js"></script>
+  <title>Mapbox Map</title>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.10.0/mapbox-gl.css" rel="stylesheet">
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.10.0/mapbox-gl.js"></script>
   <style>
     body, html {
       margin: 0;
@@ -15,22 +14,40 @@
       width: 100%;
     }
     #map {
-      height: 100%;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100%;
     }
   </style>
 </head>
 <body>
   <div id="map"></div>
   <script>
-    var map = L.map('map').setView([-31.9505, 115.8575], 10); // Perth coordinates
+    mapboxgl.accessToken = 'pk.eyJ1IjoibjFja3MiLCJhIjoiY2pocHloMmRnMTBhMzNkcHY0cTFxbXpyNSJ9.aq1dSUHuvJAmLD3wsYsxew';
+    const map = new mapboxgl.Map({
+      container: 'map', // container ID
+      style: 'mapbox://styles/mapbox/streets-v11', // style URL
+      center: [115.8575, -31.9505], // starting position [lng, lat] (Perth coordinates)
+      zoom: 10 // starting zoom
+    });
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
+    map.on('load', function() {
+      map.addSource('imagery', {
+        'type': 'raster',
+        'tiles': [
+          'https://token.slip.wa.gov.au/arcgis/rest/services/Landgate_Subscription_Imagery/WANow/ImageServer?token=b-q3VP-iQ5wOBKX9T8s_47TBXpE8FbE_xD4S9Ao0Cf_HjemOekzUuyLmGs69jMVwgi--4RhqOATd2cromIHIQXUsImplVX4OTVZu2fvdoCpJjB2PdU2_02M1InbWLlPr'
+        ],
+        'tileSize': 256
+      });
 
-    var imageryLayer = L.esri.imageMapLayer({
-      url: 'https://token.slip.wa.gov.au/arcgis/rest/services/Landgate_Subscription_Imagery/WANow/ImageServer?token=b-q3VP-iQ5wOBKX9T8s_47TBXpE8FbE_xD4S9Ao0Cf_HjemOekzUuyLmGs69jMVwgi--4RhqOATd2cromIHIQXUsImplVX4OTVZu2fvdoCpJjB2PdU2_02M1InbWLlPr'
-    }).addTo(map);
+      map.addLayer({
+        'id': 'imagery-layer',
+        'type': 'raster',
+        'source': 'imagery',
+        'paint': {}
+      });
+    });
   </script>
 </body>
 </html>
