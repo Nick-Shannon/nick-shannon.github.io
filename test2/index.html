@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Main Roads Hub Embed</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f4f4;
+    }
+    header {
+      background-color: #005691;
+      color: white;
+      padding: 20px 30px;
+    }
+    iframe {
+      width: 100%;
+      height: calc(100vh - 80px); /* accounts for header height */
+      border: none;
+    }
+  </style>
+
+  <!-- Genesys Co-browse Script -->
+  <script type="text/javascript" charset="utf-8">
+    (function (g, e, n, es, ys) {
+      g['_genesysJs'] = e;
+      g[e] = g[e] || function () {
+        (g[e].q = g[e].q || []).push(arguments)
+      };
+      g[e].t = 1 * new Date();
+      g[e].c = es;
+      ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
+    })(window, 'Genesys', 'https://apps.mypurecloud.com.au/genesys-bootstrap/genesys.min.js', {
+      environment: 'prod-apse2',
+      deploymentId: '8a8ad8a8-ec56-4909-9c62-318ec9162c43'
+    });
+  </script>
+</head>
+<body>
+
+  <!-- Page Header -->
+  <header>
+    <h1>Main Roads Data Portal</h1>
+    <p>Embedded ArcGIS Hub view powered by GitHub + Genesys Co-browse</p>
+  </header>
+
+  <!-- ArcGIS Hub Site Embed -->
+  <iframe 
+    src="https://devportal-mainroads.hub.arcgis.com/" 
+    title="Main Roads ArcGIS Hub">
+  </iframe>
+
+</body>
+</html>
